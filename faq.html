@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGT Costing · FAQ</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="cgt.css">
+</head>
+<body>
+
+<nav class="navbar is-cgt" role="navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="index.html"><span class="brand-mark">C</span><span class="brand-txt">CGT&nbsp;·&nbsp;Care Georeferencing Tool</span></a>
+  </div>
+  <div class="navbar-menu"><div class="navbar-end">
+    <a class="navbar-item" href="index.html">Estimator</a>
+    <a class="navbar-item is-active" href="faq.html">FAQ</a>
+  </div></div>
+</nav>
+
+<section class="section">
+<div class="container" style="max-width:840px">
+  <p class="eyebrow">Care Georeferencing Tool</p>
+  <h1 class="title is-2 page-title">Frequently asked questions</h1>
+  <p class="subtitle is-6 muted">What the CGT is, what drives the cost, and what an implementation does and doesn't include.</p>
+
+  <h2 class="title is-5 mt-6 mb-2" style="color:var(--blue)">About the tool</h2>
+  <div id="faqAbout"></div>
+
+  <h2 class="title is-5 mt-6 mb-2" style="color:var(--blue)">What drives the cost</h2>
+  <div id="faqCost"></div>
+
+  <h2 class="title is-5 mt-6 mb-2" style="color:var(--blue)">Packages &amp; what's included</h2>
+  <div id="faqPkg"></div>
+
+  <div class="note-box mt-6">All cost figures in this tool are <strong>indicative and for planning only</strong>. They are calibrated against real implementation experience but the final investment is confirmed through a scoping consultation tailored to your context.</div>
+</div>
+</section>
+
+<script src="costing.js"></script>
+<script>
+const ABOUT=[
+  ['What is the Care Georeferencing Tool?',
+   'The CGT is a UNDP geospatial methodology that maps and analyses care supply, demand and accessibility to reveal <strong>care deserts</strong>, the areas where need is high and services are out of reach, and help governments decide where to invest. It is open-source and built for national ownership.'],
+  ['What is a care desert?',
+   'A care desert is a geographic zone where the need for care far exceeds the services available, and where those services are distant or out of reach. In these areas, families, and especially women, struggle to access childcare, elder care or disability support, which limits their ability to work, study and take part in public life.'],
+  ['What are the three dimensions the tool analyses?',
+   '<strong>Supply</strong> is where care services are located, across public, private, community and informal provision. <strong>Demand</strong> is where care-dependent people live, children, older persons and persons with disabilities. <strong>Accessibility</strong> is whether people can actually reach those services, given roads, distance and terrain. Where high demand meets low accessibility, the tool reveals a care desert.'],
+  ['What does the tool produce?',
+   'It produces care maps and the evidence to act on them: an internal planning map for government, a public-facing citizen map so residents can find care, the identification of care deserts, and, where chosen, a compound-vulnerability view showing where care gaps and climate risk overlap.'],
+  ['Why does climate risk come into a care tool?',
+   'In disaster-prone, fast-warming regions, the communities least served by care are often the most exposed to climate shocks. Mapping where care gaps and climate hazards coincide helps governments protect the people most at risk of being left behind, and design care systems that stay resilient during crises.'],
+];
+const COST=[
+  ['What is the single biggest factor in the cost?',
+   'The data you already hold. If your government has good facility registries and a recent census, much of the mapping is desk-based and costs less. If little exists, the work shifts to primary collection in the field, which is the most labour-intensive part of any implementation.'],
+  ['Does the estimate include fieldwork?',
+   'It accounts for the level of primary data collection implied by your data availability and terrain, more where existing data is poor or the area is hard to reach. The exact field effort is confirmed during scoping, because it depends heavily on local conditions. Fieldwork is often the largest single variable, so it is worth discussing early.'],
+  ['How do area and population affect cost?',
+   'A larger area means more ground to map and more roads to model for accessibility. A larger population means more services to locate and more care-dependent people to map. They drive different parts of the work, so both matter.'],
+  ['Why is the cost shown as a range?',
+   'At the estimating stage, an honest range is more useful than a false-precise single figure. The final number is confirmed once the scope, data and area are looked at in detail. Treat the estimate as a planning guide, not a quote.'],
+  ['Why does the annual running cost matter so much?',
+   'A care map is only useful if it stays current. The annual cost covers hosting, refreshing the data, maintenance and support. For a government deciding whether to adopt the tool, this recurring figure is often the real test of sustainability, and over five years it can match the set-up investment.'],
+  ['Are software licences included?',
+   'The CGT is open-source, so there are no licence fees. The investment covers the expertise and work to build, launch and sustain your care map, not software you have to keep paying for.'],
+];
+const PKG=[
+  ['What is in the Foundational package?',
+   'The essentials: mapping of care supply, demand and accessibility, identification of care deserts, an internal planning map, a summary findings report, and initial training for your team. A solid first version that reveals where the gaps are.'],
+  ['What does Standard add?',
+   'Everything in Foundational, plus the climate and compound-vulnerability layer, a public citizen-facing map, equity and inclusion analysis, a policy brief with recommendations, structured user testing, and one year of technical support. This is the recommended package for most governments.'],
+  ['What does Comprehensive add?',
+   'Everything in Standard, plus scenario and investment modelling, custom planning dashboards, a prioritised investment plan, extended ongoing support, and repeated capacity building. Suited to governments that want to use the tool intensively for planning over time.'],
+  ['Can we start small and expand later?',
+   'Yes. Many governments begin with one care type and a Foundational or Standard package, then add care categories, a larger area, or deeper analysis as they see the value. Because the tool is government-owned, you control how and when it grows.'],
+  ['Is regional technical support included in these figures?',
+   'The estimate reflects the work to deliver an implementation. Support from the UNDP regional team may be provided alongside, depending on the arrangement; this is confirmed during scoping. It is worth clarifying what central support is available, as it can affect what your own budget needs to cover.'],
+];
+function build(id,items){
+  document.getElementById(id).innerHTML=items.map(([q,a])=>
+    `<div class="faq-item"><div class="faq-q">${q}<span class="ar">▾</span></div><div class="faq-a">${a}</div></div>`).join('');
+}
+build('faqAbout',ABOUT);build('faqCost',COST);build('faqPkg',PKG);
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+</script>
+</body>
+</html>

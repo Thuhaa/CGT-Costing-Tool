@@ -3,300 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CGT Costing Studio</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-  :root{
-    --bg:#EEF3F9; --panel:#FFFFFF; --navy:#16304D; --navy2:#1A3A5C;
-    --blue:#006EB5; --ltblue:#009EDB; --teal:#008080; --gold:#C9A84C;
-    --orange:#E8872A; --purple:#6B4C9A; --mute:#6B7C90; --line:#E3EAF2;
-    --side-txt:#AFC4DA; --side-line:#2A4A6B;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--navy2);-webkit-font-smoothing:antialiased;}
-  .app{display:grid;grid-template-columns:340px 1fr;min-height:100vh;}
-  @media(max-width:920px){.app{grid-template-columns:1fr;}}
-
-  /* SIDEBAR */
-  .side{background:linear-gradient(180deg,#16304D 0%,#1A3A5C 100%);color:#fff;padding:26px 24px;position:sticky;top:0;height:100vh;overflow-y:auto;}
-  @media(max-width:920px){.side{position:static;height:auto;}}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
-  .brand .mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--ltblue),var(--teal));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;}
-  .brand .nm{font-weight:700;font-size:16px;letter-spacing:-0.2px;}
-  .brand .sb{font-size:11.5px;color:var(--side-txt);letter-spacing:.5px;}
-  .side-divider{height:1px;background:var(--side-line);margin:22px 0 18px;}
-  .ctl-group{margin-bottom:20px;}
-  .ctl-group .gh{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;}
-  .ctl{margin-bottom:13px;}
-  .ctl label{display:block;font-size:12.5px;color:var(--side-txt);font-weight:500;margin-bottom:5px;}
-  .ctl select,.ctl input{width:100%;padding:9px 11px;border:1px solid var(--side-line);border-radius:9px;background:#21456A;color:#fff;font-size:13.5px;font-family:inherit;font-weight:500;}
-  .ctl select:focus,.ctl input:focus{outline:none;border-color:var(--ltblue);}
-  .ctl select option{background:#1A3A5C;}
-  .switches{display:flex;flex-direction:column;gap:10px;}
-  .sw{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:500;cursor:pointer;}
-  .sw input{width:38px;height:21px;appearance:none;background:#2C4F73;border-radius:20px;position:relative;cursor:pointer;transition:.2s;flex:none;}
-  .sw input:checked{background:var(--ltblue);}
-  .sw input::after{content:'';position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s;}
-  .sw input:checked::after{left:20px;}
-  .rate-row{display:flex;align-items:center;gap:8px;}
-  .rate-row span{font-size:12px;color:var(--side-txt);white-space:nowrap;}
-
-  /* MAIN */
-  .main{padding:30px 36px 40px;overflow-x:hidden;}
-  .topbar{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:8px;}
-  .topbar h1{font-size:25px;font-weight:800;letter-spacing:-0.5px;color:var(--navy2);}
-  .topbar p{font-size:14px;color:var(--mute);margin-top:3px;}
-  .presets{display:flex;gap:8px;flex-wrap:wrap;}
-  .chip{font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:20px;border:1.5px solid var(--line);background:#fff;color:var(--navy2);cursor:pointer;transition:.15s;}
-  .chip:hover{border-color:var(--blue);color:var(--blue);}
-  .chip.active{background:var(--blue);border-color:var(--blue);color:#fff;}
-
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0;}
-  @media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr);}}
-  .kpi{background:var(--panel);border-radius:16px;padding:18px 20px;box-shadow:0 2px 10px rgba(22,48,77,0.05);position:relative;overflow:hidden;}
-  .kpi::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--accent,var(--blue));}
-  .kpi .kl{font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);font-weight:700;}
-  .kpi .kv{font-size:30px;font-weight:800;color:var(--navy2);margin-top:7px;letter-spacing:-0.5px;line-height:1;}
-  .kpi .kr{font-size:12px;color:var(--mute);margin-top:6px;}
-
-  .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;}
-  @media(max-width:1100px){.grid{grid-template-columns:1fr;}}
-  .card{background:var(--panel);border-radius:16px;padding:22px 24px;box-shadow:0 2px 10px rgba(22,48,77,0.05);}
-  .card h3{font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:4px;}
-  .card .csub{font-size:12.5px;color:var(--mute);margin-bottom:18px;}
-  .span2{grid-column:1 / -1;}
-
-  /* phase bars */
-  .pbar{margin-bottom:11px;}
-  .pbar .pt{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
-  .pbar .pt .nm{color:var(--navy2);font-weight:600;}
-  .pbar .pt .dy{color:var(--mute);font-weight:500;font-variant-numeric:tabular-nums;}
-  .ptrack{height:10px;background:#EDF2F8;border-radius:6px;overflow:hidden;}
-  .pfill{height:100%;border-radius:6px;transition:width .45s cubic-bezier(.22,1,.36,1);}
-
-  /* composition */
-  .stack{display:flex;height:26px;border-radius:8px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.02);}
-  .stack div{transition:width .45s cubic-bezier(.22,1,.36,1);}
-  .legend{display:flex;flex-direction:column;gap:9px;}
-  .lg{display:flex;align-items:center;justify-content:space-between;font-size:13px;}
-  .lg .ll{display:flex;align-items:center;gap:9px;color:var(--navy2);font-weight:500;}
-  .lg .dot{width:11px;height:11px;border-radius:3px;flex:none;}
-  .lg .lv{color:var(--mute);font-weight:600;font-variant-numeric:tabular-nums;}
-
-  .footnote{font-size:12px;color:var(--mute);font-style:italic;margin-top:22px;max-width:900px;}
-  svg text{font-family:'Inter',sans-serif;}
-</style>
+<title>CGT Costing · Internal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="cgt.css">
 </head>
 <body>
-<div class="app">
-  <!-- SIDEBAR -->
-  <aside class="side">
-    <div class="brand">
-      <div class="mark">C</div>
-      <div><div class="nm">CGT Costing Studio</div><div class="sb">UNDP · Care Georeferencing Tool</div></div>
-    </div>
-    <div class="side-divider"></div>
 
-    <div class="ctl-group">
-      <div class="gh">The context</div>
-      <div class="ctl"><label>Territory size</label>
-        <select id="area"><option value="small">Single city / small area</option><option value="medium" selected>Large city / metro</option><option value="large">Province / state</option><option value="vlarge">National / multi-region</option></select></div>
-      <div class="ctl"><label>Population in scope</label>
-        <select id="pop"><option value="p1">Under 100,000</option><option value="p2" selected>100k – 500k</option><option value="p3">500k – 2M</option><option value="p4">Over 2M</option></select></div>
-      <div class="ctl"><label>Geographic complexity</label>
-        <select id="terrain"><option value="flat">Flat / well-mapped</option><option value="moderate" selected>Moderate / mixed</option><option value="mountain">Mountainous / complex</option></select></div>
-      <div class="ctl"><label>Existing data availability</label>
-        <select id="data"><option value="good">Good registries &amp; census</option><option value="moderate" selected>Partial / mixed</option><option value="poor">Poor / field needed</option></select></div>
-      <div class="ctl"><label>Care categories</label>
-        <select id="cats"><option value="one">Childcare only</option><option value="two" selected>Two groups</option><option value="three">Three or more</option></select></div>
-      <div class="ctl" style="margin-top:14px;">
-        <div class="switches">
-          <label class="sw">Climate / hazard layer <input type="checkbox" id="climate" checked></label>
-          <label class="sw">Public citizen map <input type="checkbox" id="dual" checked></label>
-        </div>
+<nav class="navbar is-cgt" role="navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="index.html"><span class="brand-mark">C</span><span class="brand-txt">CGT&nbsp;·&nbsp;Internal estimating view</span></a>
+  </div>
+  <div class="navbar-menu"><div class="navbar-end">
+    <a class="navbar-item" href="index.html">← Client estimator</a>
+  </div></div>
+</nav>
+
+<section class="section pt-5">
+<div class="container">
+  <p class="eyebrow">Internal · not for clients</p>
+  <h1 class="title is-3 page-title">Implementation cost model</h1>
+  <p class="subtitle is-6 muted">Full mechanics, person-days, day rate and exact figures. For UNDP estimating and calibration.</p>
+
+  <div class="columns mt-2">
+    <div class="column is-3">
+      <div class="box">
+        <p class="eyebrow mb-3">Context</p>
+        <div class="field"><label class="label is-small">Territory size</label><div class="select is-small is-fullwidth"><select id="area"><option value="small">Single city / small</option><option value="medium" selected>Large city / metro</option><option value="large">Province / state</option><option value="vlarge">National</option></select></div></div>
+        <div class="field"><label class="label is-small">Population</label><div class="select is-small is-fullwidth"><select id="pop"><option value="p1">&lt;100k</option><option value="p2" selected>100k–500k</option><option value="p3">500k–2M</option><option value="p4">&gt;2M</option></select></div></div>
+        <div class="field"><label class="label is-small">Geographic complexity</label><div class="select is-small is-fullwidth"><select id="terrain"><option value="flat">Flat</option><option value="moderate" selected>Moderate</option><option value="mountain">Mountainous</option></select></div></div>
+        <div class="field"><label class="label is-small">Data availability</label><div class="select is-small is-fullwidth"><select id="data"><option value="good">Good</option><option value="moderate" selected>Partial</option><option value="poor">Poor / field</option></select></div></div>
+        <div class="field"><label class="label is-small">Care categories</label><div class="select is-small is-fullwidth"><select id="cats"><option value="one">One</option><option value="two" selected>Two</option><option value="three">Three+</option></select></div></div>
+
+        <hr>
+        <p class="eyebrow mb-3">Service level</p>
+        <div class="field"><label class="label is-small">Analysis depth</label><div class="select is-small is-fullwidth"><select id="analysis"><option value="foundational">Foundational</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
+        <div class="field"><label class="label is-small">Reporting</label><div class="select is-small is-fullwidth"><select id="reporting"><option value="light">Light</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
+        <div class="field"><label class="label is-small">Support</label><div class="select is-small is-fullwidth"><select id="support"><option value="handover">Handover</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
+        <div class="field"><label class="checkbox is-small"><input type="checkbox" id="climate" checked> Climate layer</label></div>
+        <div class="field"><label class="checkbox is-small"><input type="checkbox" id="dual" checked> Public citizen map</label></div>
+
+        <hr>
+        <div class="field"><label class="label is-small">Blended day rate (USD)</label><input class="input is-small" type="number" id="rate" value="300" min="50" step="25"></div>
       </div>
     </div>
 
-    <div class="ctl-group">
-      <div class="gh">Level of service</div>
-      <div class="ctl"><label>Analysis depth</label>
-        <select id="analysis"><option value="foundational">Foundational</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div>
-      <div class="ctl"><label>Reporting level</label>
-        <select id="reporting"><option value="light">Light</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div>
-      <div class="ctl"><label>Support level</label>
-        <select id="support"><option value="handover">Handover only</option><option value="standard" selected>Standard (1 year)</option><option value="comprehensive">Comprehensive / ongoing</option></select></div>
-    </div>
-
-    <div class="ctl-group">
-      <div class="gh">Assumptions</div>
-      <div class="ctl"><label>Blended daily rate</label>
-        <div class="rate-row"><span>USD</span><input type="number" id="rate" value="300" min="50" step="25"><span>/day</span></div></div>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-    <div class="topbar">
-      <div>
-        <h1>Implementation Cost Estimate</h1>
-        <p>Indicative cost of rolling out the CGT, by context and level of service.</p>
+    <div class="column is-9">
+      <div class="columns">
+        <div class="column"><div class="box kpi" style="--accent:var(--blue)"><div class="kl">Set-up (exact)</div><div class="kv" id="kSetup">—</div><div class="kr" id="kSetupR"></div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--teal)"><div class="kl">Annual running</div><div class="kv" id="kRecur">—</div><div class="kr" id="kRecurR"></div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--gold)"><div class="kl">First-year</div><div class="kv" id="kFirst">—</div><div class="kr">set-up + 1 yr</div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--orange)"><div class="kl">Person-days</div><div class="kv" id="kDays">—</div><div class="kr">total effort</div></div></div>
       </div>
-      <div class="presets">
-        <button class="chip" data-preset="thimphu">Thimphu, Bhutan</button>
-        <button class="chip" data-preset="selangor">Selangor, Malaysia</button>
-        <button class="chip" data-preset="bhubaneswar">Bhubaneswar, India</button>
-      </div>
-    </div>
 
-    <div class="kpis">
-      <div class="kpi" style="--accent:var(--blue)"><div class="kl">Set-up (one-time)</div><div class="kv" id="kSetup">—</div><div class="kr" id="kSetupR"></div></div>
-      <div class="kpi" style="--accent:var(--teal)"><div class="kl">Annual running</div><div class="kv" id="kRecur">—</div><div class="kr" id="kRecurR"></div></div>
-      <div class="kpi" style="--accent:var(--gold)"><div class="kl">First-year total</div><div class="kv" id="kFirst">—</div><div class="kr">set-up + 1 yr running</div></div>
-      <div class="kpi" style="--accent:var(--orange)"><div class="kl">5-year total</div><div class="kv" id="kFive">—</div><div class="kr">set-up + 5 yrs running</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card span2">
-        <h3>Effort by phase</h3>
-        <div class="csub">Person-days across the seven-phase methodology, scaled to your context.</div>
+      <div class="box">
+        <h3 class="eyebrow">Effort by phase</h3>
+        <p class="muted is-size-7 mb-4">Person-days across the seven-phase methodology.</p>
         <div id="phaseBars"></div>
       </div>
 
-      <div class="card">
-        <h3>Cost over five years</h3>
-        <div class="csub">Cumulative, set-up plus annual running.</div>
-        <div id="lineChart"></div>
+      <div class="columns">
+        <div class="column is-7"><div class="box"><h3 class="eyebrow">Cost over five years</h3><p class="muted is-size-7 mb-4">Cumulative, set-up plus annual running.</p><div id="lineChart"></div></div></div>
+        <div class="column is-5"><div class="box"><h3 class="eyebrow">First-year composition</h3><p class="muted is-size-7 mb-4">Where the first year's budget goes.</p><div class="stack" id="stack"></div><div id="legend"></div></div></div>
       </div>
 
-      <div class="card">
-        <h3>First-year composition</h3>
-        <div class="csub">Where the first year's budget goes.</div>
-        <div class="stack" id="stack"></div>
-        <div class="legend" id="legend"></div>
-      </div>
+      <div class="note-box">Baseline effort and multipliers are structural placeholders. Calibrate against actual Bhutan and Malaysia costs, and confirm what is in scope (fieldwork, regional team support, recurring costs) before using these figures in proposals.</div>
     </div>
-
-    <p class="footnote">Figures are indicative, for demonstration and planning only. Baseline effort and multipliers are structural placeholders to be calibrated against actual Bhutan and Malaysia implementation costs before use in proposals or budgets.</p>
-  </main>
+  </div>
 </div>
+</section>
 
+<script src="costing.js"></script>
 <script>
-const PHASES=[
-  {key:'scoping',name:'Scoping & strategic alignment',base:15,color:'#16304D'},
-  {key:'adapt',name:'Methodological adaptation & workplan',base:20,color:'#006EB5'},
-  {key:'supply',name:'Mapping care supply',base:35,color:'#009EDB'},
-  {key:'demand',name:'Mapping care demand',base:25,color:'#008080'},
-  {key:'access',name:'Accessibility & gap analysis',base:30,color:'#E8872A'},
-  {key:'caremap',name:'Care Map & visualisation',base:28,color:'#C9A84C'},
-  {key:'valid',name:'Validation & capacity transfer',base:25,color:'#6B4C9A'},
-];
-const M={
-  area:{small:1.0,medium:1.2,large:1.5,vlarge:2.0},
-  pop:{p1:0.85,p2:1.0,p3:1.3,p4:1.6},
-  terrain:{flat:1.0,moderate:1.2,mountain:1.5},
-  data:{good:0.8,moderate:1.0,poor:1.5},
-  cats:{one:0.85,two:1.0,three:1.25},
-  analysis:{foundational:0.85,standard:1.0,comprehensive:1.3},
-  reporting:{light:0.9,standard:1.0,comprehensive:1.25},
-  support:{handover:0.9,standard:1.1,comprehensive:1.35},
-};
-const SUPPORT_RECUR={handover:1500,standard:6000,comprehensive:15000};
-const DATA_ACQ={good:1000,moderate:3000,poor:8000};
-const PRESETS={
-  thimphu:{area:'medium',pop:'p2',terrain:'mountain',data:'poor',cats:'two',climate:true,dual:true,analysis:'standard',reporting:'standard',support:'standard'},
-  selangor:{area:'large',pop:'p4',terrain:'moderate',data:'moderate',cats:'two',climate:true,dual:true,analysis:'comprehensive',reporting:'comprehensive',support:'standard'},
-  bhubaneswar:{area:'medium',pop:'p3',terrain:'flat',data:'moderate',cats:'one',climate:false,dual:true,analysis:'standard',reporting:'standard',support:'handover'},
-};
 const $=id=>document.getElementById(id);
-const money=n=>'$'+(Math.round(n/100)*100).toLocaleString();
-const moneyK=n=>n>=1000?('$'+(n/1000).toFixed(n>=10000?0:1)+'k'):('$'+Math.round(n));
-
-function calc(){
-  const v=k=>$(k).value;
-  const area=M.area[v('area')],pop=M.pop[v('pop')],terrain=M.terrain[v('terrain')],data=M.data[v('data')],
-        cats=M.cats[v('cats')],analysis=M.analysis[v('analysis')],reporting=M.reporting[v('reporting')],support=M.support[v('support')];
-  const climate=$('climate').checked,dual=$('dual').checked,rate=Math.max(50,+$('rate').value||300);
-  const d={};
-  d.scoping=PHASES[0].base*(1+(area-1)*0.2);
-  d.adapt=PHASES[1].base*(1+(cats-1)*0.5);
-  d.supply=PHASES[2].base*pop*data*cats*(1+(area-1)*0.5);
-  d.demand=PHASES[3].base*pop*data*cats*analysis;
-  d.access=PHASES[4].base*terrain*area*analysis*(climate?1.15:1);
-  d.caremap=PHASES[5].base*reporting*(dual?1.35:1);
-  d.valid=PHASES[6].base*data*support*(1+(pop-1)*0.3);
-  let totalDays=0;for(const k in d)totalDays+=d[k];
-  const labour=totalDays*rate;
-  const dataAcq=DATA_ACQ[v('data')]*(0.7+cats*0.3)+(climate?2000:0);
-  const platform=(dual?6000:2500)+500;
-  const setup=labour+dataAcq+platform;
-  const hosting=dual?4000:1500;
-  const dataRefresh=totalDays*0.15*rate;
-  const maintenance=(dual?20:12)*rate*support;
-  const supportR=SUPPORT_RECUR[v('support')];
-  const recur=hosting+dataRefresh+maintenance+supportR;
-  return {d,totalDays,labour,dataAcq,platform,setup,hosting,dataRefresh,maintenance,supportR,recur,
-          first:setup+recur,five:setup+recur*5,rate};
-}
-
-function animate(el,to,fmt){
-  const from=el._cur||0,start=performance.now(),dur=480;
-  function step(t){const k=Math.min(1,(t-start)/dur),e=1-Math.pow(1-k,3),val=from+(to-from)*e;
-    el.textContent=fmt(val);if(k<1)requestAnimationFrame(step);else el._cur=to;}
-  requestAnimationFrame(step);
-}
-
-function lineChart(r){
-  const W=380,H=170,pL=40,pR=14,pT=14,pB=28;
-  const ys=[1,2,3,4,5].map(y=>r.setup+r.recur*y);
-  const max=ys[4]*1.08,min=0;
-  const xx=i=>pL+(W-pL-pR)*(i/4);
-  const yy=val=>H-pB-(H-pT-pB)*((val-min)/(max-min));
-  let area='M'+xx(0)+','+(H-pB),line='';
-  ys.forEach((val,i)=>{area+=' L'+xx(i)+','+yy(val);line+=(i?' L':'M')+xx(i)+','+yy(val);});
-  area+=' L'+xx(4)+','+(H-pB)+' Z';
-  let dots='',xlab='';
-  ys.forEach((val,i)=>{dots+=`<circle cx="${xx(i)}" cy="${yy(val)}" r="4" fill="#006EB5" stroke="#fff" stroke-width="2"/>`;
-    xlab+=`<text x="${xx(i)}" y="${H-9}" font-size="11" fill="#6B7C90" text-anchor="middle">Yr ${i+1}</text>`;});
-  let ylab='';for(let g=0;g<=2;g++){const val=max*g/2,y=yy(val);
-    ylab+=`<line x1="${pL}" y1="${y}" x2="${W-pR}" y2="${y}" stroke="#EDF2F8"/>`;
-    ylab+=`<text x="${pL-6}" y="${y+4}" font-size="10" fill="#9AABBC" text-anchor="end">${moneyK(val)}</text>`;}
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#006EB5" stop-opacity="0.22"/><stop offset="1" stop-color="#006EB5" stop-opacity="0"/></linearGradient></defs>
-    ${ylab}<path d="${area}" fill="url(#ag)"/><path d="${line}" fill="none" stroke="#006EB5" stroke-width="2.5"/>${dots}${xlab}</svg>`;
-}
-
+function opts(){return{areaKey:$('area').value,popKey:$('pop').value,terrainKey:$('terrain').value,dataKey:$('data').value,catsKey:$('cats').value,
+  analysisKey:$('analysis').value,reportingKey:$('reporting').value,supportKey:$('support').value,climate:$('climate').checked,dual:$('dual').checked,rate:+$('rate').value||300};}
 function render(){
-  const r=calc();
-  animate($('kSetup'),r.setup,money);
-  animate($('kRecur'),r.recur,v=>money(v)+'/yr');
-  animate($('kFirst'),r.first,money);
-  animate($('kFive'),r.five,money);
-  $('kSetupR').textContent=money(r.setup*0.75)+' – '+money(r.setup*1.35);
-  $('kRecurR').textContent=money(r.recur*0.8)+' – '+money(r.recur*1.3);
-  const maxd=Math.max(...PHASES.map(p=>r.d[p.key]));
-  $('phaseBars').innerHTML=PHASES.map(p=>{const dv=r.d[p.key],w=(dv/maxd*100).toFixed(1);
-    return `<div class="pbar"><div class="pt"><span class="nm">${p.name}</span><span class="dy">${Math.round(dv)} days</span></div>
-      <div class="ptrack"><div class="pfill" style="width:${w}%;background:${p.color}"></div></div></div>`;}).join('');
-  $('lineChart').innerHTML=lineChart(r);
-  const comp=[
-    {nm:'Personnel',v:r.labour,c:'#006EB5'},
-    {nm:'Data acquisition',v:r.dataAcq,c:'#009EDB'},
-    {nm:'Platform set-up',v:r.platform,c:'#008080'},
-    {nm:'Hosting',v:r.hosting,c:'#C9A84C'},
-    {nm:'Maintenance & support',v:r.maintenance+r.supportR+r.dataRefresh,c:'#E8872A'},
-  ];
+  const r=CGT.compute(opts());
+  CGT.animate($('kSetup'),r.setup,CGT.money);
+  CGT.animate($('kRecur'),r.recur,v=>CGT.money(v)+'/yr');
+  CGT.animate($('kFirst'),r.first,CGT.money);
+  CGT.animate($('kDays'),r.totalDays,v=>Math.round(v));
+  $('kSetupR').textContent=CGT.money(r.setup*0.75)+' – '+CGT.money(r.setup*1.35);
+  $('kRecurR').textContent=CGT.money(r.recur*0.8)+' – '+CGT.money(r.recur*1.3);
+  const maxd=Math.max(...r.days);
+  $('phaseBars').innerHTML=CGT.PHASES.map((p,i)=>{const d=r.days[i],w=(d/maxd*100).toFixed(1);
+    return `<div class="pbar"><div class="pt"><span class="nm">${p.n}</span><span class="dy">${Math.round(d)} days</span></div><div class="ptrack"><div class="pfill" style="width:${w}%;background:${p.c}"></div></div></div>`;}).join('');
+  $('lineChart').innerHTML=CGT.lineChart(r.setup,r.recur,560,180);
+  const comp=[{nm:'Personnel',v:r.labour,c:'#006EB5'},{nm:'Data acquisition',v:r.dataAcq,c:'#009EDB'},{nm:'Platform set-up',v:r.platform,c:'#008080'},{nm:'Hosting',v:r.hosting,c:'#C9A84C'},{nm:'Maintenance & support',v:r.maintenance+r.supportR+r.dataRefresh,c:'#E8872A'}];
   const tot=comp.reduce((a,b)=>a+b.v,0);
   $('stack').innerHTML=comp.map(c=>`<div style="width:${(c.v/tot*100).toFixed(2)}%;background:${c.c}"></div>`).join('');
-  $('legend').innerHTML=comp.map(c=>`<div class="lg"><span class="ll"><span class="dot" style="background:${c.c}"></span>${c.nm}</span><span class="lv">${money(c.v)}</span></div>`).join('');
+  $('legend').innerHTML=comp.map(c=>`<div class="lg"><span class="ll"><span class="dot" style="background:${c.c}"></span>${c.nm}</span><span class="lv">${CGT.money(c.v)}</span></div>`).join('');
 }
-
-document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',()=>{clearActive();render();}));
-function clearActive(){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));}
-document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
-  const p=PRESETS[ch.dataset.preset];if(!p)return;
-  for(const k in p){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=p[k];else el.value=p[k];}
-  clearActive();ch.classList.add('active');render();
-}));
+document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',render));
 render();
 </script>
 </body>

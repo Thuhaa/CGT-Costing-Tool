@@ -4,249 +4,169 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CGT Investment Estimator</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-  :root{
-    --bg:#EEF3F9;--panel:#FFFFFF;--navy:#16304D;--navy2:#1A3A5C;--blue:#006EB5;--ltblue:#009EDB;
-    --teal:#008080;--gold:#C9A84C;--orange:#E8872A;--purple:#6B4C9A;--green:#2E8B57;--mute:#6B7C90;
-    --line:#E3EAF2;--side-txt:#AFC4DA;--side-line:#2A4A6B;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--navy2);-webkit-font-smoothing:antialiased;}
-  .app{display:grid;grid-template-columns:330px 1fr;min-height:100vh;}
-  @media(max-width:920px){.app{grid-template-columns:1fr;}}
-
-  .side{background:linear-gradient(180deg,#16304D,#1A3A5C);color:#fff;padding:26px 24px;position:sticky;top:0;height:100vh;overflow-y:auto;}
-  @media(max-width:920px){.side{position:static;height:auto;}}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
-  .brand .mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--ltblue),var(--teal));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;}
-  .brand .nm{font-weight:700;font-size:15.5px;}
-  .brand .sb{font-size:11px;color:var(--side-txt);letter-spacing:.4px;}
-  .side-divider{height:1px;background:var(--side-line);margin:22px 0 18px;}
-  .gh{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px;}
-  .gx{font-size:12px;color:var(--side-txt);margin-bottom:16px;line-height:1.4;}
-  .ctl{margin-bottom:14px;}
-  .ctl label{display:block;font-size:12.5px;color:var(--side-txt);font-weight:500;margin-bottom:5px;}
-  .ctl select{width:100%;padding:9px 11px;border:1px solid var(--side-line);border-radius:9px;background:#21456A;color:#fff;font-size:13.5px;font-family:inherit;font-weight:500;}
-  .ctl select:focus{outline:none;border-color:var(--ltblue);}
-  .ctl select option{background:#1A3A5C;}
-  .ex{margin-top:8px;}
-  .ex .gh{margin-bottom:10px;}
-  .exbtn{display:block;width:100%;text-align:left;font-size:12.5px;font-weight:500;padding:8px 11px;margin-bottom:7px;border-radius:8px;border:1px solid var(--side-line);background:transparent;color:#D6E4F2;cursor:pointer;transition:.15s;}
-  .exbtn:hover{background:#21456A;border-color:var(--ltblue);}
-
-  .main{padding:30px 36px 44px;}
-  .head h1{font-size:26px;font-weight:800;letter-spacing:-0.5px;}
-  .head p{font-size:14.5px;color:var(--mute);margin-top:4px;max-width:640px;}
-
-  .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0;}
-  @media(max-width:1100px){.packages{grid-template-columns:1fr;}}
-  .pkg{background:var(--panel);border-radius:16px;padding:22px 22px 20px;box-shadow:0 2px 10px rgba(22,48,77,0.05);border:2px solid transparent;cursor:pointer;position:relative;transition:.18s;}
-  .pkg:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(22,48,77,0.10);}
-  .pkg.sel{border-color:var(--blue);}
-  .pkg .rec{position:absolute;top:-11px;right:18px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 11px;border-radius:20px;}
-  .pkg .pn{font-size:18px;font-weight:800;color:var(--navy2);}
-  .pkg .pd{font-size:12.5px;color:var(--mute);margin:4px 0 16px;min-height:34px;}
-  .pkg .price{font-size:24px;font-weight:800;color:var(--blue);letter-spacing:-0.5px;}
-  .pkg .price .u{font-size:12px;color:var(--mute);font-weight:600;}
-  .pkg .run{font-size:13px;color:var(--navy2);font-weight:600;margin-top:4px;}
-  .pkg .run span{color:var(--mute);font-weight:500;}
-  .pkg .pick{margin-top:15px;font-size:12.5px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:6px;}
-  .pkg.sel .pick::before{content:'✓ ';}
-
-  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px;}
-  @media(max-width:1100px){.kpis{grid-template-columns:1fr;}}
-  .kpi{background:var(--panel);border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(22,48,77,0.05);position:relative;overflow:hidden;}
-  .kpi::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--accent,var(--blue));}
-  .kpi .kl{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);font-weight:700;}
-  .kpi .kv{font-size:25px;font-weight:800;margin-top:6px;letter-spacing:-0.5px;}
-  .kpi .kr{font-size:11.5px;color:var(--mute);margin-top:4px;}
-
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-  @media(max-width:1100px){.grid2{grid-template-columns:1fr;}}
-  .card{background:var(--panel);border-radius:16px;padding:22px 24px;box-shadow:0 2px 10px rgba(22,48,77,0.05);}
-  .card h3{font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:4px;}
-  .card .csub{font-size:12.5px;color:var(--mute);margin-bottom:16px;}
-
-  .recv{display:flex;flex-direction:column;gap:10px;}
-  .ri{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--navy2);}
-  .ri .ck{width:19px;height:19px;border-radius:6px;background:#E4F0E9;color:var(--green);flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:1px;}
-
-  .journey{display:flex;flex-direction:column;gap:0;}
-  .jstep{display:flex;gap:13px;position:relative;padding-bottom:15px;}
-  .jstep:last-child{padding-bottom:0;}
-  .jstep .num{width:28px;height:28px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;z-index:1;}
-  .jstep:not(:last-child)::before{content:'';position:absolute;left:13.5px;top:28px;bottom:0;width:2px;background:var(--line);}
-  .jstep .jt{font-size:14px;font-weight:600;color:var(--navy2);}
-  .jstep .jd{font-size:12.5px;color:var(--mute);}
-
-  .footnote{font-size:12px;color:var(--mute);margin-top:20px;padding:14px 18px;background:#E7EEF6;border-radius:12px;border-left:4px solid var(--gold);max-width:920px;}
-  svg text{font-family:'Inter',sans-serif;}
-</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="cgt.css">
 </head>
 <body>
-<div class="app">
-  <aside class="side">
-    <div class="brand"><div class="mark">C</div><div><div class="nm">CGT Investment Estimator</div><div class="sb">UNDP · Care Georeferencing Tool</div></div></div>
-    <div class="side-divider"></div>
-    <div class="gh">Tell us about your context</div>
-    <div class="gx">A few details about where you would implement the CGT. Your estimate updates as you go.</div>
-    <div class="ctl"><label>Area to be covered</label>
-      <select id="area"><option value="small">A single city or district</option><option value="medium" selected>A large city or metro area</option><option value="large">A province or state</option><option value="vlarge">Nationwide or several regions</option></select></div>
-    <div class="ctl"><label>Population in that area</label>
-      <select id="pop"><option value="p1">Under 100,000</option><option value="p2" selected>100,000 – 500,000</option><option value="p3">500,000 – 2 million</option><option value="p4">Over 2 million</option></select></div>
-    <div class="ctl"><label>Terrain &amp; mapping difficulty</label>
-      <select id="terrain"><option value="flat">Mostly flat, well-mapped</option><option value="moderate" selected>Mixed</option><option value="mountain">Mountainous or hard to reach</option></select></div>
-    <div class="ctl"><label>Care data you already hold</label>
-      <select id="data"><option value="good">Good registries &amp; recent census</option><option value="moderate" selected>Some data, partial</option><option value="poor">Little; would start from scratch</option></select></div>
-    <div class="ctl"><label>Types of care to map</label>
-      <select id="cats"><option value="one">Childcare only</option><option value="two" selected>Two (e.g. child &amp; elder care)</option><option value="three">Three or more</option></select></div>
 
-    <div class="side-divider"></div>
-    <div class="ex"><div class="gh">Try an example</div>
-      <button class="exbtn" data-preset="thimphu">Thimphu, Bhutan</button>
-      <button class="exbtn" data-preset="selangor">Selangor, Malaysia</button>
-      <button class="exbtn" data-preset="bhubaneswar">Bhubaneswar, India</button>
+<nav class="navbar is-cgt" role="navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="index.html"><span class="brand-mark">C</span><span class="brand-txt">CGT&nbsp;·&nbsp;Care Georeferencing Tool</span></a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item is-active" href="index.html">Estimator</a>
+      <a class="navbar-item" href="faq.html">FAQ</a>
     </div>
-  </aside>
+  </div>
+</nav>
 
-  <main class="main">
-    <div class="head">
-      <h1>Estimate your CGT investment</h1>
-      <p>Choose the package that fits your ambition and budget. Estimates are indicative and refined through a short scoping conversation.</p>
-    </div>
+<section class="section pt-5">
+<div class="container">
 
-    <div class="packages" id="packages"></div>
+  <p class="eyebrow">Care Georeferencing Tool</p>
+  <h1 class="title is-2 page-title">Estimate your CGT investment</h1>
+  <p class="subtitle is-6 muted" style="max-width:640px">Choose the package that fits your ambition and budget. Estimates are indicative and refined through a short scoping conversation.</p>
 
-    <div class="kpis">
-      <div class="kpi" style="--accent:var(--blue)"><div class="kl">Set-up investment</div><div class="kv" id="kSetup">—</div><div class="kr">one-time, to build &amp; launch</div></div>
-      <div class="kpi" style="--accent:var(--teal)"><div class="kl">Annual running cost</div><div class="kv" id="kRecur">—</div><div class="kr">to keep it live &amp; updated</div></div>
-      <div class="kpi" style="--accent:var(--gold)"><div class="kl">Five-year total</div><div class="kv" id="kFive">—</div><div class="kr">set-up + 5 years running</div></div>
-    </div>
+  <div class="columns mt-2">
+    <!-- CONTEXT -->
+    <div class="column is-3">
+      <div class="box">
+        <p class="eyebrow mb-3">Your context</p>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Area to be covered</label><button class="info-btn" data-modal-open="area">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="area">
+            <option value="small">A single city or district</option><option value="medium" selected>A large city or metro area</option>
+            <option value="large">A province or state</option><option value="vlarge">Nationwide or several regions</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Population in that area</label><button class="info-btn" data-modal-open="pop">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="pop">
+            <option value="p1">Under 100,000</option><option value="p2" selected>100,000 – 500,000</option>
+            <option value="p3">500,000 – 2 million</option><option value="p4">Over 2 million</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Terrain &amp; mapping difficulty</label><button class="info-btn" data-modal-open="terrain">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="terrain">
+            <option value="flat">Mostly flat, well-mapped</option><option value="moderate" selected>Mixed</option>
+            <option value="mountain">Mountainous or hard to reach</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Care data you already hold</label><button class="info-btn" data-modal-open="data">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="data">
+            <option value="good">Good registries &amp; recent census</option><option value="moderate" selected>Some data, partial</option>
+            <option value="poor">Little; would start from scratch</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Types of care to map</label><button class="info-btn" data-modal-open="cats">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="cats">
+            <option value="one">Childcare only</option><option value="two" selected>Two (e.g. child &amp; elder care)</option>
+            <option value="three">Three or more</option></select></div></div>
+        </div>
 
-    <div class="grid2">
-      <div class="card">
-        <h3>What you receive</h3>
-        <div class="csub" id="recvSub">Included in the selected package.</div>
-        <div class="recv" id="recv"></div>
+        <hr>
+        <p class="eyebrow mb-3">Try an example</p>
+        <button class="button is-small is-fullwidth mb-2 chip" data-preset="thimphu">Thimphu, Bhutan</button>
+        <button class="button is-small is-fullwidth mb-2 chip" data-preset="selangor">Selangor, Malaysia</button>
+        <button class="button is-small is-fullwidth chip" data-preset="bhubaneswar">Bhubaneswar, India</button>
       </div>
-      <div class="card">
-        <h3>Your implementation journey</h3>
-        <div class="csub">The seven phases we guide you through.</div>
-        <div class="journey" id="journey"></div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="column is-9">
+      <!-- packages -->
+      <div class="label-row mb-2"><p class="eyebrow">Choose a package</p><button class="info-btn" data-modal-open="packages">i</button></div>
+      <div class="columns" id="packages"></div>
+
+      <!-- kpis -->
+      <div class="columns mt-2">
+        <div class="column"><div class="box kpi" style="--accent:var(--blue)"><div class="label-row"><div class="kl">Set-up investment</div><button class="info-btn" data-modal-open="setup">i</button></div><div class="kv" id="kSetup">—</div><div class="kr">one-time, to build &amp; launch</div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--teal)"><div class="label-row"><div class="kl">Annual running cost</div><button class="info-btn" data-modal-open="recur">i</button></div><div class="kv" id="kRecur">—</div><div class="kr">to keep it live &amp; updated</div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--gold)"><div class="kl">Five-year total</div><div class="kv" id="kFive">—</div><div class="kr">set-up + 5 years running</div></div></div>
       </div>
-    </div>
 
-    <div class="card">
-      <h3>Investment over five years</h3>
-      <div class="csub">Set-up in year one, then the cost of keeping the system live, accurate and supported.</div>
-      <div id="lineChart"></div>
-    </div>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="box">
+            <div class="label-row"><h3 class="eyebrow">What you receive</h3></div>
+            <p class="muted is-size-7 mb-4" id="recvSub">Included in the selected package.</p>
+            <div class="recv" id="recv"></div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="box">
+            <div class="label-row"><h3 class="eyebrow">Your implementation journey</h3><button class="info-btn" data-modal-open="journey">i</button></div>
+            <p class="muted is-size-7 mb-4">The seven phases we guide you through.</p>
+            <div id="journey"></div>
+          </div>
+        </div>
+      </div>
 
-    <div class="footnote">These figures are indicative, for planning purposes only. The final investment is confirmed after a short scoping consultation that looks at your data, area and goals in detail. The CGT is open-source and built for national ownership, so you can run and sustain it yourselves over time.</div>
-  </main>
+      <div class="box">
+        <h3 class="eyebrow">Investment over five years</h3>
+        <p class="muted is-size-7 mb-4">Set-up in year one, then the cost of keeping the system live, accurate and supported.</p>
+        <div id="lineChart"></div>
+      </div>
+
+      <div class="note-box">These figures are indicative, for planning only. The final investment is confirmed after a short scoping consultation. The CGT is open-source and built for national ownership, so you can run and sustain it yourselves over time. <a href="faq.html">See the FAQ</a> for what is and isn't included.</div>
+    </div>
+  </div>
 </div>
+</section>
 
+<!-- MODALS -->
+<div class="modal" id="modal-area"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Area to be covered</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>The geographic area you want to map, a single city, a metro area, a whole province, or a nation. <strong>Larger areas cost more</strong> because there is more ground to map, more roads to model for accessibility, and more field logistics. Start with the area where the need is clearest; you can expand later.</p></section></div></div>
+
+<div class="modal" id="modal-pop"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Population in that area</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>The number of people living in the area to be mapped. <strong>Higher populations increase cost</strong> because there are more care services to locate and more care-dependent people whose needs must be mapped. It is the size of the population, not just the land area, that drives the demand-mapping work.</p></section></div></div>
+
+<div class="modal" id="modal-terrain"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Terrain &amp; mapping difficulty</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>How easy the area is to map and move around. <strong>Flat, well-mapped cities are cheaper</strong>; mountainous or remote areas cost more because travel times are harder to model (a service a short distance away may be hours apart by road), roads are less complete in existing data, and more validation is needed. This is a major cost driver in places like Bhutan.</p></section></div></div>
+
+<div class="modal" id="modal-data"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Care data you already hold</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>Whether your government already holds usable data on care services and population. <strong>This is the single biggest cost driver.</strong> If you have good facility registries and a recent census, much of the mapping is desk-based. If little exists, the work shifts to primary collection, field surveys and ground-truthing, which is labour-intensive. Good existing data can substantially lower the cost.</p></section></div></div>
+
+<div class="modal" id="modal-cats"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Types of care to map</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>Which care needs you want the map to cover, childcare, elder care, disability support, or several. <strong>Each additional care type adds cost</strong>, because it means mapping a different set of services and a different population group, each with its own data sources. Many governments start with one priority group and add others over time.</p></section></div></div>
+
+<div class="modal" id="modal-packages"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Choosing a package</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>The package sets how deep the analysis goes, how much is packaged for you, and how much ongoing support you receive.</p><p class="mt-3"><strong>Foundational</strong> gives you the core care map and the gaps it reveals. <strong>Standard</strong> adds the climate-risk layer, a public-facing citizen map, and a year of support. <strong>Comprehensive</strong> adds scenario modelling, planning dashboards and an ongoing partnership.</p><p class="mt-3">You can start small and step up later. <a href="faq.html">The FAQ</a> explains each package in full.</p></section></div></div>
+
+<div class="modal" id="modal-setup"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Set-up investment</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>The one-time cost to build and launch your care map: scoping, mapping supply, demand and accessibility, producing the maps, and training your team. Shown as a <strong>range</strong> because the exact figure depends on details confirmed during scoping. This is open-source software, so you are paying for the work and expertise, not licences.</p></section></div></div>
+
+<div class="modal" id="modal-recur"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Annual running cost</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>The yearly cost of keeping the system live, accurate and supported: hosting, refreshing the data so the map stays current, maintenance, and technical support. <strong>This is the number that determines whether the tool is sustainable</strong> for your government over time, so it is worth planning for from the start, not just the set-up cost. Over five years it can match the set-up investment.</p></section></div></div>
+
+<div class="modal" id="modal-journey"><div class="modal-background" data-modal-close></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Your implementation journey</p><button class="delete" data-modal-close></button></header><section class="modal-card-body"><p>Every CGT implementation follows the same seven-phase methodology, from agreeing the scope, through mapping care supply, demand and accessibility, to validating the results with your teams and handing over the tool. This structure is what makes the results rigorous and comparable across cities and countries. <a href="faq.html">The FAQ</a> describes each phase.</p></section></div></div>
+
+<script src="costing.js"></script>
 <script>
-const RATE=300; // internal blended day rate, hidden from client
-const PHASES=[
-  {n:'Scoping & strategic alignment',d:'Align on goals, priority groups and scope',base:15,c:'#16304D'},
-  {n:'Methodological adaptation & workplan',d:'Tailor the CGT to your context',base:20,c:'#006EB5'},
-  {n:'Mapping care supply',d:'Locate every care service',base:35,c:'#009EDB'},
-  {n:'Mapping care demand',d:'Map where care-dependent people live',base:25,c:'#008080'},
-  {n:'Accessibility & gap analysis',d:'Reveal the care deserts',base:30,c:'#E8872A'},
-  {n:'Care Map & visualisation',d:'Build your care maps',base:28,c:'#C9A84C'},
-  {n:'Validation & capacity transfer',d:'Validate findings and hand over',base:25,c:'#6B4C9A'},
-];
-const M={area:{small:1.0,medium:1.2,large:1.5,vlarge:2.0},pop:{p1:0.85,p2:1.0,p3:1.3,p4:1.6},
-  terrain:{flat:1.0,moderate:1.2,mountain:1.5},data:{good:0.8,moderate:1.0,poor:1.5},cats:{one:0.85,two:1.0,three:1.25},
-  analysis:{foundational:0.85,standard:1.0,comprehensive:1.3},reporting:{light:0.9,standard:1.0,comprehensive:1.25},
-  support:{handover:0.9,standard:1.1,comprehensive:1.35}};
-const SUPPORT_RECUR={handover:1500,standard:6000,comprehensive:15000};
-const DATA_ACQ={good:1000,moderate:3000,poor:8000};
-const TIERS={
-  foundational:{name:'Foundational',desc:'The essentials: a clear care map and the gaps it reveals.',analysis:'foundational',reporting:'light',support:'handover',climate:false,dual:false},
-  standard:{name:'Standard',desc:'The full picture: climate risk, a public map and a year of support.',analysis:'standard',reporting:'standard',support:'standard',climate:true,dual:true,rec:true},
-  comprehensive:{name:'Comprehensive',desc:'Deep analysis, planning tools and ongoing partnership.',analysis:'comprehensive',reporting:'comprehensive',support:'comprehensive',climate:true,dual:true},
-};
-const ORDER=['foundational','standard','comprehensive'];
-const DELIV={
-  foundational:['Care supply, demand & accessibility mapping','Care desert identification','Internal planning map','Summary findings report','Initial team training'],
-  standard:['Everything in Foundational','Climate & compound-vulnerability layer','Public citizen-facing map','Equity & inclusion analysis','Policy brief with recommendations','Structured user testing','One year of technical support'],
-  comprehensive:['Everything in Standard','Scenario & investment modelling','Custom planning dashboards','Prioritised investment plan','Extended, ongoing support','Repeated capacity building'],
-};
 let selected='standard';
 const $=id=>document.getElementById(id);
-const ctx=()=>({area:M.area[$('area').value],pop:M.pop[$('pop').value],terrain:M.terrain[$('terrain').value],
-  data:M.data[$('data').value],cats:M.cats[$('cats').value],dataKey:$('data').value,catsN:M.cats[$('cats').value]});
-
-function compute(tierKey){
-  const t=TIERS[tierKey],c=ctx();
-  const analysis=M.analysis[t.analysis],reporting=M.reporting[t.reporting],support=M.support[t.support];
-  const climate=t.climate,dual=t.dual;
-  const d=[
-    PHASES[0].base*(1+(c.area-1)*0.2),
-    PHASES[1].base*(1+(c.cats-1)*0.5),
-    PHASES[2].base*c.pop*c.data*c.cats*(1+(c.area-1)*0.5),
-    PHASES[3].base*c.pop*c.data*c.cats*analysis,
-    PHASES[4].base*c.terrain*c.area*analysis*(climate?1.15:1),
-    PHASES[5].base*reporting*(dual?1.35:1),
-    PHASES[6].base*c.data*support*(1+(c.pop-1)*0.3),
-  ];
-  const totalDays=d.reduce((a,b)=>a+b,0);
-  const labour=totalDays*RATE;
-  const dataAcq=DATA_ACQ[c.dataKey]*(0.7+c.cats*0.3)+(climate?2000:0);
-  const platform=(dual?6000:2500)+500;
-  const setup=labour+dataAcq+platform;
-  const recur=(dual?4000:1500)+totalDays*0.15*RATE+(dual?20:12)*RATE*support+SUPPORT_RECUR[t.support];
-  return {setup,recur,five:setup+recur*5,days:d,totalDays};
-}
-const kfmt=n=>{const v=Math.round(n/1000);return '$'+v+'k';};
-const rng=(e,lo,hi)=>kfmt(e*lo)+' – '+kfmt(e*hi);
+const ctx=()=>({areaKey:$('area').value,popKey:$('pop').value,terrainKey:$('terrain').value,dataKey:$('data').value,catsKey:$('cats').value});
 
 function renderPackages(){
-  $('packages').innerHTML=ORDER.map(k=>{
-    const t=TIERS[k],r=compute(k),sel=k===selected;
-    return `<div class="pkg ${sel?'sel':''}" data-tier="${k}">
-      ${t.rec?'<div class="rec">RECOMMENDED</div>':''}
+  const c=ctx();
+  $('packages').innerHTML=CGT.ORDER.map(k=>{
+    const t=CGT.TIERS[k], r=CGT.computeTier(k,c), sel=k===selected;
+    return `<div class="column"><div class="box pkg ${sel?'sel':''}" data-tier="${k}">
+      ${t.rec?'<div class="rec-badge">RECOMMENDED</div>':''}
       <div class="pn">${t.name}</div><div class="pd">${t.desc}</div>
-      <div class="price">${rng(r.setup,0.8,1.3)} <span class="u">set-up</span></div>
-      <div class="run">${rng(r.recur,0.82,1.28)}<span> / year running</span></div>
-      <div class="pick">${sel?'Selected':'Select'}</div></div>`;
+      <div class="price">${CGT.rng(r.setup,0.8,1.3)} <span class="u">set-up</span></div>
+      <div class="run">${CGT.rng(r.recur,0.82,1.28)}<span> / year running</span></div>
+      <div class="pick">${sel?'✓ Selected':'Select'}</div></div></div>`;
   }).join('');
   document.querySelectorAll('.pkg').forEach(p=>p.addEventListener('click',()=>{selected=p.dataset.tier;renderAll();}));
 }
-function lineChart(r){
-  const W=820,H=180,pL=44,pR=16,pT=14,pB=30;
-  const ys=[1,2,3,4,5].map(y=>r.setup+r.recur*y),max=ys[4]*1.08;
-  const xx=i=>pL+(W-pL-pR)*(i/4),yy=v=>H-pB-(H-pT-pB)*(v/max);
-  let area='M'+xx(0)+','+(H-pB),line='',dots='',xl='';
-  ys.forEach((v,i)=>{area+=' L'+xx(i)+','+yy(v);line+=(i?' L':'M')+xx(i)+','+yy(v);
-    dots+=`<circle cx="${xx(i)}" cy="${yy(v)}" r="4.5" fill="#006EB5" stroke="#fff" stroke-width="2"/>`;
-    xl+=`<text x="${xx(i)}" y="${H-9}" font-size="11.5" fill="#6B7C90" text-anchor="middle">Year ${i+1}</text>`;});
-  area+=' L'+xx(4)+','+(H-pB)+' Z';
-  let yl='';for(let g=0;g<=2;g++){const v=max*g/2,y=yy(v);yl+=`<line x1="${pL}" y1="${y}" x2="${W-pR}" y2="${y}" stroke="#EDF2F8"/><text x="${pL-7}" y="${y+4}" font-size="10.5" fill="#9AABBC" text-anchor="end">${kfmt(v)}</text>`;}
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#006EB5" stop-opacity="0.20"/><stop offset="1" stop-color="#006EB5" stop-opacity="0"/></linearGradient></defs>${yl}<path d="${area}" fill="url(#ag)"/><path d="${line}" fill="none" stroke="#006EB5" stroke-width="2.5"/>${dots}${xl}</svg>`;
-}
-function animate(el,to,fmt){const from=el._cur||0,s=performance.now();function st(t){const k=Math.min(1,(t-s)/450),e=1-Math.pow(1-k,3),v=from+(to-from)*e;el.textContent=fmt(v);if(k<1)requestAnimationFrame(st);else el._cur=to;}requestAnimationFrame(st);}
-
 function renderAll(){
   renderPackages();
-  const r=compute(selected);
-  animate($('kSetup'),r.setup,v=>rng(v,0.8,1.3));
-  $('kSetup')._cur=r.setup;$('kSetup').textContent=rng(r.setup,0.8,1.3);
-  $('kRecur').textContent=rng(r.recur,0.82,1.28)+'/yr';
-  $('kFive').textContent=rng(r.five,0.82,1.28);
-  $('recvSub').textContent='Included in the '+TIERS[selected].name+' package.';
-  $('recv').innerHTML=DELIV[selected].map(x=>`<div class="ri"><span class="ck">✓</span><span>${x}</span></div>`).join('');
-  $('journey').innerHTML=PHASES.map((p,i)=>`<div class="jstep"><div class="num" style="background:${p.c}">${i+1}</div><div><div class="jt">${p.n}</div><div class="jd">${p.d}</div></div></div>`).join('');
-  $('lineChart').innerHTML=lineChart(r);
+  const r=CGT.computeTier(selected,ctx());
+  $('kSetup').textContent=CGT.rng(r.setup,0.8,1.3);
+  $('kRecur').textContent=CGT.rng(r.recur,0.82,1.28)+'/yr';
+  $('kFive').textContent=CGT.rng(r.five,0.82,1.28);
+  $('recvSub').textContent='Included in the '+CGT.TIERS[selected].name+' package.';
+  $('recv').innerHTML=CGT.DELIV[selected].map(x=>`<div class="ri"><span class="ck">✓</span><span>${x}</span></div>`).join('');
+  $('journey').innerHTML=CGT.PHASES.map((p,i)=>`<div class="jstep"><div class="num" style="background:${p.c}">${i+1}</div><div><div class="jt">${p.n}</div><div class="jd">${p.d}</div></div></div>`).join('');
+  $('lineChart').innerHTML=CGT.lineChart(r.setup,r.recur);
 }
-const PRESETS={thimphu:{area:'medium',pop:'p2',terrain:'mountain',data:'poor',cats:'two'},
-  selangor:{area:'large',pop:'p4',terrain:'moderate',data:'moderate',cats:'two'},
-  bhubaneswar:{area:'medium',pop:'p3',terrain:'flat',data:'moderate',cats:'one'}};
 document.querySelectorAll('select').forEach(el=>el.addEventListener('input',renderAll));
-document.querySelectorAll('.exbtn').forEach(b=>b.addEventListener('click',()=>{const p=PRESETS[b.dataset.preset];for(const k in p)$(k).value=p[k];renderAll();}));
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{const p=CGT.PRESETS[b.dataset.preset];for(const k in p){const id={areaKey:'area',popKey:'pop',terrainKey:'terrain',dataKey:'data',catsKey:'cats'}[k];$(id).value=p[k];}renderAll();}));
+CGT.initModals();
 renderAll();
 </script>
 </body>

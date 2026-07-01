@@ -63,6 +63,8 @@ Effort is converted to cost with a **blended day rate** (currently a placeholder
 - Personnel: total person-days × day rate (the largest component).
 - Data acquisition: scales with data availability (placeholder USD 1,000 / 3,000 / 8,000 for good / partial / poor) and care categories; climate layer adds more.
 - Platform set-up: higher when a public citizen map is included.
+- Regional technical support: USD 15,000, confirmed, flat (see 5.1).
+- Travel and mission costs: illustrative placeholder built from flight and DSA components (see 5.2).
 
 **Recurring (annual)**
 - Hosting: higher with a public-facing map.
@@ -80,6 +82,28 @@ The model is structurally complete but not yet calibrated. Three inputs will mak
 3. **A documented rationale per value.** Each multiplier already has a one-line justification (above); these can be firmed up as evidence comes in.
 
 **Scope to confirm during calibration:** the figures should make explicit whether they include primary fieldwork, regional team technical support, and recurring costs, since these are the items most often left ambiguous in a single quoted number, and the ones that most affect the total.
+
+### 5.1 First confirmed input: regional technical support
+
+As of June 2026, the model carries its first real, confirmed figure rather than a placeholder: **regional technical support costs USD 15,000**, one-time, set-up phase. This covers UNDP regional-hub input during set-up: guiding consultants on the methodology, CGT-related meetings, and inputs to the country-office TOR. Two things about this figure matter for how it is used:
+
+- It is **labour only**. Travel and mission costs for regional-team input are explicitly excluded from this figure, and are costed separately (see 5.2).
+- It is treated as a **flat cost**, not scaled by territory, population or terrain, because the scope of regional guidance (methodological input, meetings, TOR review) does not clearly scale with the size of the place being mapped. This is a reasoned assumption, not a tested one; if future data shows regional support scales with implementation complexity rather than being roughly fixed, the model should be updated accordingly.
+- The extent of what is included is not fully defined ("guiding consultants on the methodology... basically everything we have to do"), so this figure should be treated as a **floor**, not a ceiling, until scoped more precisely.
+
+### 5.2 Travel and mission costs
+
+Travel was previously absent from the model entirely, a real gap rather than a considered omission. It is now included as an explicit, editable line, built from illustrative components rather than a live rate table:
+
+| Component | Illustrative value | Basis |
+|---|---|---|
+| Flight (BKK to a regional Asian capital, economy return) | USD 700 | Rough typical fare; not sourced from a live booking |
+| Daily subsistence allowance (DSA) | USD 200 / night | Placeholder; **not** the actual published UN DSA rate |
+| Nights per mission | 6 | Typical mission length assumption |
+| Number of missions (set-up) | 2 | e.g. a scoping mission and a validation/training mission |
+| Travelers per mission | 1 | Adjustable for team travel |
+
+At these defaults, travel adds approximately USD 3,800 to a standard set-up. **This figure must be checked against the actual, current UN DSA schedule for the relevant country before it is used in any real budget or proposal.** It is a placeholder that makes an existing cost visible, not a sourced estimate.
 
 ---
 

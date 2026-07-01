@@ -25,6 +25,27 @@ window.CGT = (function () {
   const SUPPORT_RECUR = {handover:1500, standard:6000, comprehensive:15000};
   const DATA_ACQ = {good:1000, moderate:3000, poor:8000};
 
+  // Regional technical support and travel: confirmed / illustrative, fully editable.
+  // Regional support: $15,000 confirmed (labour only, one-time, set-up phase) - first
+  // real calibration input as of June 2026. Not scaled by context multipliers, since
+  // scope (guidance, meetings, TOR input) does not clearly scale with territory/population.
+  const REGIONAL_SUPPORT_DEFAULT = 15000;
+
+  // Travel: illustrative placeholder (flight + DSA), NOT from a real UN DSA table.
+  // Must be checked against the current DSA schedule before use in a real proposal.
+  const TRAVEL_DEFAULTS = {
+    flightCost: 700,     // USD, economy return, BKK to a regional Asian capital
+    dsaPerNight: 200,    // USD/night, placeholder - replace with actual UN DSA rate
+    nightsPerMission: 6,
+    missions: 2,         // e.g. scoping mission + validation/training mission
+    travelers: 1,
+  };
+  function travelCost(t){
+    t = t || TRAVEL_DEFAULTS;
+    return (t.flightCost + t.dsaPerNight * t.nightsPerMission) * t.missions * t.travelers;
+  }
+
+
   const TIERS = {
     foundational:{name:'Foundational', desc:'The essentials: a clear care map and the gaps it reveals.',
       analysis:'foundational', reporting:'light', support:'handover', climate:false, dual:false},
@@ -41,10 +62,11 @@ window.CGT = (function () {
   };
 
   function compute(o) {
-    // o: {areaKey,popKey,terrainKey,dataKey,catsKey,analysisKey,reportingKey,supportKey,climate,dual,rate}
+    // o: {areaKey,popKey,terrainKey,dataKey,catsKey,analysisKey,reportingKey,supportKey,climate,dual,rate,
+    //     regionalSupport, travel:{flightCost,dsaPerNight,nightsPerMission,missions,travelers}}
     const area=M.area[o.areaKey], pop=M.pop[o.popKey], terrain=M.terrain[o.terrainKey],
-          data=M.data[o.dataKey], cats=M.cats[o.catsKey],
-          analysis=M.analysis[o.analysisKey], reporting=M.reporting[o.reportingKey], support=M.support[o.supportKey];
+        data=M.data[o.dataKey], cats=M.cats[o.catsKey],
+        analysis=M.analysis[o.analysisKey], reporting=M.reporting[o.reportingKey], support=M.support[o.supportKey];
     const climate=!!o.climate, dual=!!o.dual, rate=Math.max(50, o.rate||RATE_DEFAULT);
     const days = [
       PHASES[0].base*(1+(area-1)*0.2),
@@ -59,19 +81,22 @@ window.CGT = (function () {
     const labour = totalDays*rate;
     const dataAcq = DATA_ACQ[o.dataKey]*(0.7+cats*0.3) + (climate?2000:0);
     const platform = (dual?6000:2500)+500;
-    const setup = labour+dataAcq+platform;
+    const regionalSupport = o.regionalSupport!=null ? o.regionalSupport : REGIONAL_SUPPORT_DEFAULT;
+    const travel = travelCost(o.travel);
+    const setup = labour+dataAcq+platform+regionalSupport+travel;
     const hosting = dual?4000:1500;
     const dataRefresh = totalDays*0.15*rate;
     const maintenance = (dual?20:12)*rate*support;
     const supportR = SUPPORT_RECUR[o.supportKey];
     const recur = hosting+dataRefresh+maintenance+supportR;
-    return {days,totalDays,labour,dataAcq,platform,setup,hosting,dataRefresh,maintenance,supportR,recur,first:setup+recur,five:setup+recur*5,rate};
+    return {days,totalDays,labour,dataAcq,platform,regionalSupport,travel,setup,hosting,dataRefresh,maintenance,supportR,recur,first:setup+recur,five:setup+recur*5,rate};
   }
 
-  function computeTier(tierKey, ctx, rate) {
+  function computeTier(tierKey, ctx, rate, regionalSupport, travel) {
     const t = TIERS[tierKey];
     return compute({areaKey:ctx.areaKey,popKey:ctx.popKey,terrainKey:ctx.terrainKey,dataKey:ctx.dataKey,catsKey:ctx.catsKey,
-      analysisKey:t.analysis,reportingKey:t.reporting,supportKey:t.support,climate:t.climate,dual:t.dual,rate:rate||RATE_DEFAULT});
+      analysisKey:t.analysis,reportingKey:t.reporting,supportKey:t.support,climate:t.climate,dual:t.dual,
+      rate:rate||RATE_DEFAULT, regionalSupport, travel});
   }
 
   const kfmt = n => '$' + Math.round(n/1000) + 'k';
@@ -111,5 +136,6 @@ window.CGT = (function () {
   };
 
   return {RATE_DEFAULT,PHASES,M,SUPPORT_RECUR,DATA_ACQ,TIERS,ORDER,DELIV,PRESETS,
-          compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
+    REGIONAL_SUPPORT_DEFAULT,TRAVEL_DEFAULTS,travelCost,
+    compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
 })();

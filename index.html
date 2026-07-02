@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CGT Investment Estimator</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="cgt.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGT Investment Estimator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="cgt.css">
 </head>
 <body>
 
@@ -23,96 +23,96 @@
 </nav>
 
 <section class="section pt-5">
-  <div class="container">
+<div class="container">
 
-    <p class="eyebrow">Care Georeferencing Tool</p>
-    <h1 class="title is-2 page-title">Estimate your CGT investment</h1>
-    <p class="subtitle is-6 muted" style="max-width:640px">Choose the package that fits your ambition and budget. Estimates are indicative and refined through a short scoping conversation.</p>
+  <p class="eyebrow">Care Georeferencing Tool</p>
+  <h1 class="title is-2 page-title">Estimate your CGT investment</h1>
+  <p class="subtitle is-6 muted" style="max-width:640px">Choose the package that fits your ambition and budget. Estimates are indicative and refined through a short scoping conversation.</p>
 
-    <div class="columns mt-2">
-      <!-- CONTEXT -->
-      <div class="column is-3">
-        <div class="box">
-          <p class="eyebrow mb-3">Your context</p>
-          <div class="field">
-            <div class="label-row"><label class="label is-small mb-0">Area to be covered</label><button class="info-btn" data-modal-open="area">i</button></div>
-            <div class="control"><div class="select is-small is-fullwidth"><select id="area">
-              <option value="small" selected>A single city or district</option><option value="medium">A large city or metro area</option>
-              <option value="large">A province or state</option><option value="vlarge">Nationwide or several regions</option></select></div></div>
-          </div>
-          <div class="field">
-            <div class="label-row"><label class="label is-small mb-0">Population in that area</label><button class="info-btn" data-modal-open="pop">i</button></div>
-            <div class="control"><div class="select is-small is-fullwidth"><select id="pop">
-              <option value="p1">Under 100,000</option><option value="p2" selected>100,000 – 500,000</option>
-              <option value="p3">500,000 – 2 million</option><option value="p4">Over 2 million</option></select></div></div>
-          </div>
-          <div class="field">
-            <div class="label-row"><label class="label is-small mb-0">Terrain &amp; mapping difficulty</label><button class="info-btn" data-modal-open="terrain">i</button></div>
-            <div class="control"><div class="select is-small is-fullwidth"><select id="terrain">
-              <option value="flat">Mostly flat, well-mapped</option><option value="moderate" selected>Mixed</option>
-              <option value="mountain">Mountainous or hard to reach</option></select></div></div>
-          </div>
-          <div class="field">
-            <div class="label-row"><label class="label is-small mb-0">Care data you already hold</label><button class="info-btn" data-modal-open="data">i</button></div>
-            <div class="control"><div class="select is-small is-fullwidth"><select id="data">
-              <option value="good" selected>Good registries &amp; recent census</option><option value="moderate">Some data, partial</option>
-              <option value="poor">Little; would start from scratch</option></select></div></div>
-          </div>
-          <div class="field">
-            <div class="label-row"><label class="label is-small mb-0">Types of care to map</label><button class="info-btn" data-modal-open="cats">i</button></div>
-            <div class="control"><div class="select is-small is-fullwidth"><select id="cats">
-              <option value="one">Childcare only</option><option value="two" selected>Two (e.g. child &amp; elder care)</option>
-              <option value="three">Three or more</option></select></div></div>
-          </div>
-
-          <hr>
-          <p class="eyebrow mb-3">Try an example</p>
-          <button class="button is-small is-fullwidth mb-2 chip" data-preset="thimphu">Thimphu, Bhutan</button>
-          <button class="button is-small is-fullwidth mb-2 chip" data-preset="selangor">Selangor, Malaysia</button>
-          <button class="button is-small is-fullwidth chip" data-preset="bhubaneswar">Bhubaneswar, India</button>
+  <div class="columns mt-2">
+    <!-- CONTEXT -->
+    <div class="column is-3">
+      <div class="box">
+        <p class="eyebrow mb-3">Your context</p>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Area to be covered</label><button class="info-btn" data-modal-open="area">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="area">
+            <option value="small" selected>A single city or district</option><option value="medium">A large city or metro area</option>
+            <option value="large">A province or state</option><option value="vlarge">Nationwide or several regions</option></select></div></div>
         </div>
-      </div>
-
-      <!-- RESULTS -->
-      <div class="column is-9">
-        <!-- packages -->
-        <div class="label-row mb-2"><p class="eyebrow">Choose a package</p><button class="info-btn" data-modal-open="packages">i</button></div>
-        <div class="columns" id="packages"></div>
-
-        <!-- kpis -->
-        <div class="columns mt-2">
-          <div class="column"><div class="box kpi" style="--accent:var(--blue)"><div class="label-row"><div class="kl">Set-up investment</div><button class="info-btn" data-modal-open="setup">i</button></div><div class="kv" id="kSetup">—</div><div class="kr">one-time, to build &amp; launch</div></div></div>
-          <div class="column"><div class="box kpi" style="--accent:var(--teal)"><div class="label-row"><div class="kl">Annual running cost</div><button class="info-btn" data-modal-open="recur">i</button></div><div class="kv" id="kRecur">—</div><div class="kr">to keep it live &amp; updated</div></div></div>
-          <div class="column"><div class="box kpi" style="--accent:var(--gold)"><div class="kl">Five-year total</div><div class="kv" id="kFive">—</div><div class="kr">set-up + 5 years running</div></div></div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Population in that area</label><button class="info-btn" data-modal-open="pop">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="pop">
+            <option value="p1">Under 100,000</option><option value="p2" selected>100,000 – 500,000</option>
+            <option value="p3">500,000 – 2 million</option><option value="p4">Over 2 million</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Terrain &amp; mapping difficulty</label><button class="info-btn" data-modal-open="terrain">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="terrain">
+            <option value="flat">Mostly flat, well-mapped</option><option value="moderate" selected>Mixed</option>
+            <option value="mountain">Mountainous or hard to reach</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Care data you already hold</label><button class="info-btn" data-modal-open="data">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="data">
+            <option value="good" selected>Good registries &amp; recent census</option><option value="moderate">Some data, partial</option>
+            <option value="poor">Little; would start from scratch</option></select></div></div>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label is-small mb-0">Types of care to map</label><button class="info-btn" data-modal-open="cats">i</button></div>
+          <div class="control"><div class="select is-small is-fullwidth"><select id="cats">
+            <option value="one">Childcare only</option><option value="two" selected>Two (e.g. child &amp; elder care)</option>
+            <option value="three">Three or more</option></select></div></div>
         </div>
 
-        <div class="columns">
-          <div class="column is-6">
-            <div class="box">
-              <div class="label-row"><h3 class="eyebrow">What you receive</h3></div>
-              <p class="muted is-size-7 mb-4" id="recvSub">Included in the selected package.</p>
-              <div class="recv" id="recv"></div>
-            </div>
-          </div>
-          <div class="column is-6">
-            <div class="box">
-              <div class="label-row"><h3 class="eyebrow">Your implementation journey</h3><button class="info-btn" data-modal-open="journey">i</button></div>
-              <p class="muted is-size-7 mb-4">The seven phases we guide you through.</p>
-              <div id="journey"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="box">
-          <h3 class="eyebrow">Investment over five years</h3>
-          <p class="muted is-size-7 mb-4">Set-up in year one, then the cost of keeping the system live, accurate and supported.</p>
-          <div id="lineChart"></div>
-        </div>
-
-        <div class="note-box">These figures are indicative, for planning only. The final investment is confirmed after a short scoping consultation. The CGT is open-source and built for national ownership, so you can run and sustain it yourselves over time. <a href="faq.html">See the FAQ</a> for what is and isn't included.</div>
+        <hr>
+        <p class="eyebrow mb-3">Try an example</p>
+        <button class="button is-small is-fullwidth mb-2 chip" data-preset="thimphu">Thimphu, Bhutan</button>
+        <button class="button is-small is-fullwidth mb-2 chip" data-preset="selangor">Selangor, Malaysia</button>
+        <button class="button is-small is-fullwidth chip" data-preset="bhubaneswar">Bhubaneswar, India</button>
       </div>
     </div>
+
+    <!-- RESULTS -->
+    <div class="column is-9">
+      <!-- packages -->
+      <div class="label-row mb-2"><p class="eyebrow">Choose a package</p><button class="info-btn" data-modal-open="packages">i</button></div>
+      <div class="columns" id="packages"></div>
+
+      <!-- kpis -->
+      <div class="columns mt-2">
+        <div class="column"><div class="box kpi" style="--accent:var(--blue)"><div class="label-row"><div class="kl">Set-up investment</div><button class="info-btn" data-modal-open="setup">i</button></div><div class="kv" id="kSetup">—</div><div class="kr">one-time, to build &amp; launch</div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--teal)"><div class="label-row"><div class="kl">Annual running cost</div><button class="info-btn" data-modal-open="recur">i</button></div><div class="kv" id="kRecur">—</div><div class="kr">to keep it live &amp; updated</div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--gold)"><div class="kl">Five-year total</div><div class="kv" id="kFive">—</div><div class="kr">set-up + 5 years running</div></div></div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="box">
+            <div class="label-row"><h3 class="eyebrow">What you receive</h3></div>
+            <p class="muted is-size-7 mb-4" id="recvSub">Included in the selected package.</p>
+            <div class="recv" id="recv"></div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="box">
+            <div class="label-row"><h3 class="eyebrow">Your implementation journey</h3><button class="info-btn" data-modal-open="journey">i</button></div>
+            <p class="muted is-size-7 mb-4">The seven phases we guide you through.</p>
+            <div id="journey"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3 class="eyebrow">Investment over five years</h3>
+        <p class="muted is-size-7 mb-4">Set-up in year one, then the cost of keeping the system live, accurate and supported.</p>
+        <div id="lineChart"></div>
+      </div>
+
+      <div class="note-box">These figures are indicative, for planning only. The final investment is confirmed after a short scoping consultation. The CGT is open-source and built for national ownership, so you can run and sustain it yourselves over time. <a href="faq.html">See the FAQ</a> for what is and isn't included.</div>
+    </div>
   </div>
+</div>
 </section>
 
 <!-- MODALS -->
@@ -136,38 +136,38 @@
 
 <script src="costing.js"></script>
 <script>
-  let selected='foundational';
-  const $=id=>document.getElementById(id);
-  const ctx=()=>({areaKey:$('area').value,popKey:$('pop').value,terrainKey:$('terrain').value,dataKey:$('data').value,catsKey:$('cats').value});
+let selected='foundational';
+const $=id=>document.getElementById(id);
+const ctx=()=>({areaKey:$('area').value,popKey:$('pop').value,terrainKey:$('terrain').value,dataKey:$('data').value,catsKey:$('cats').value});
 
-  function renderPackages(){
-    const c=ctx();
-    $('packages').innerHTML=CGT.ORDER.map(k=>{
-      const t=CGT.TIERS[k], r=CGT.computeTier(k,c), sel=k===selected;
-      return `<div class="column"><div class="box pkg ${sel?'sel':''}" data-tier="${k}">
+function renderPackages(){
+  const c=ctx();
+  $('packages').innerHTML=CGT.ORDER.map(k=>{
+    const t=CGT.TIERS[k], r=CGT.computeTier(k,c), sel=k===selected;
+    return `<div class="column"><div class="box pkg ${sel?'sel':''}" data-tier="${k}">
       ${t.rec?'<div class="rec-badge">RECOMMENDED</div>':''}
       <div class="pn">${t.name}</div><div class="pd">${t.desc}</div>
       <div class="price">${CGT.rng(r.setup,0.871,1.088)} <span class="u">set-up</span></div>
       <div class="run">${CGT.rng(r.recur,0.82,1.28)}<span> / year running</span></div>
       <div class="pick">${sel?'✓ Selected':'Select'}</div></div></div>`;
-    }).join('');
-    document.querySelectorAll('.pkg').forEach(p=>p.addEventListener('click',()=>{selected=p.dataset.tier;renderAll();}));
-  }
-  function renderAll(){
-    renderPackages();
-    const r=CGT.computeTier(selected,ctx());
-    $('kSetup').textContent=CGT.rng(r.setup,0.871,1.088);
-    $('kRecur').textContent=CGT.rng(r.recur,0.82,1.28)+'/yr';
-    $('kFive').textContent=CGT.rng(r.five,0.82,1.28);
-    $('recvSub').textContent='Included in the '+CGT.TIERS[selected].name+' package.';
-    $('recv').innerHTML=CGT.DELIV[selected].map(x=>`<div class="ri"><span class="ck">✓</span><span>${x}</span></div>`).join('');
-    $('journey').innerHTML=CGT.PHASES.map((p,i)=>`<div class="jstep"><div class="num" style="background:${p.c}">${i+1}</div><div><div class="jt">${p.n}</div><div class="jd">${p.d}</div></div></div>`).join('');
-    $('lineChart').innerHTML=CGT.lineChart(r.setup,r.recur);
-  }
-  document.querySelectorAll('select').forEach(el=>el.addEventListener('input',renderAll));
-  document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{const p=CGT.PRESETS[b.dataset.preset];for(const k in p){const id={areaKey:'area',popKey:'pop',terrainKey:'terrain',dataKey:'data',catsKey:'cats'}[k];$(id).value=p[k];}renderAll();}));
-  CGT.initModals();
-  renderAll();
+  }).join('');
+  document.querySelectorAll('.pkg').forEach(p=>p.addEventListener('click',()=>{selected=p.dataset.tier;renderAll();}));
+}
+function renderAll(){
+  renderPackages();
+  const r=CGT.computeTier(selected,ctx());
+  $('kSetup').textContent=CGT.rng(r.setup,0.871,1.088);
+  $('kRecur').textContent=CGT.rng(r.recur,0.82,1.28)+'/yr';
+  $('kFive').textContent=CGT.rng(r.five,0.82,1.28);
+  $('recvSub').textContent='Included in the '+CGT.TIERS[selected].name+' package.';
+  $('recv').innerHTML=CGT.DELIV[selected].map(x=>`<div class="ri"><span class="ck">✓</span><span>${x}</span></div>`).join('');
+  $('journey').innerHTML=CGT.PHASES.map((p,i)=>`<div class="jstep"><div class="num" style="background:${p.c}">${i+1}</div><div><div class="jt">${p.n}</div><div class="jd">${p.d}</div></div></div>`).join('');
+  $('lineChart').innerHTML=CGT.lineChart(r.setup,r.recur);
+}
+document.querySelectorAll('select').forEach(el=>el.addEventListener('input',renderAll));
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{const p=CGT.PRESETS[b.dataset.preset];for(const k in p){const id={areaKey:'area',popKey:'pop',terrainKey:'terrain',dataKey:'data',catsKey:'cats'}[k];$(id).value=p[k];}renderAll();}));
+CGT.initModals();
+renderAll();
 </script>
 </body>
 </html>

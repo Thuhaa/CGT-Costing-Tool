@@ -3,13 +3,13 @@ window.CGT = (function () {
   const RATE_DEFAULT = 300; // internal blended day rate
 
   const PHASES = [
-    { key:'scoping', n:'Scoping & strategic alignment', d:'Align on goals, priority groups and scope', base:15, c:'#16304D' },
-    { key:'adapt',   n:'Methodological adaptation & workplan', d:'Tailor the CGT to your context', base:20, c:'#006EB5' },
-    { key:'supply',  n:'Mapping care supply', d:'Locate every care service', base:35, c:'#009EDB' },
-    { key:'demand',  n:'Mapping care demand', d:'Map where care-dependent people live', base:25, c:'#008080' },
-    { key:'access',  n:'Accessibility & gap analysis', d:'Reveal the care deserts', base:30, c:'#E8872A' },
-    { key:'caremap', n:'Care Map & visualisation', d:'Build your care maps', base:28, c:'#C9A84C' },
-    { key:'valid',   n:'Validation & capacity transfer', d:'Validate findings and hand over', base:25, c:'#6B4C9A' },
+    { key:'scoping', n:'Scoping & strategic alignment', d:'Align on goals, priority groups and scope', base:9, c:'#16304D' },
+    { key:'adapt',   n:'Methodological adaptation & workplan', d:'Tailor the CGT to your context', base:13, c:'#006EB5' },
+    { key:'supply',  n:'Mapping care supply', d:'Locate every care service', base:23, c:'#009EDB' },
+    { key:'demand',  n:'Mapping care demand', d:'Map where care-dependent people live', base:18, c:'#008080' },
+    { key:'access',  n:'Accessibility & gap analysis', d:'Reveal the care deserts', base:19, c:'#E8872A' },
+    { key:'caremap', n:'Care Map & visualisation', d:'Build your care maps', base:19, c:'#C9A84C' },
+    { key:'valid',   n:'Validation & capacity transfer', d:'Validate findings and hand over', base:15, c:'#6B4C9A' },
   ];
 
   const M = {
@@ -26,10 +26,11 @@ window.CGT = (function () {
   const DATA_ACQ = {good:1000, moderate:3000, poor:8000};
 
   // Regional technical support and travel: confirmed / illustrative, fully editable.
-  // Regional support: $15,000 confirmed (labour only, one-time, set-up phase) - first
-  // real calibration input as of June 2026. Not scaled by context multipliers, since
-  // scope (guidance, meetings, TOR input) does not clearly scale with territory/population.
+  // Regional support: confirmed range USD 15,000-25,000 (labour only, one-time, set-up
+  // phase). Default kept at the low end so client-facing figures stay stable; the range
+  // is documented and editable in the internal tool.
   const REGIONAL_SUPPORT_DEFAULT = 15000;
+  const REGIONAL_SUPPORT_RANGE = { low: 15000, high: 25000 };
 
   // Travel: illustrative placeholder (flight + DSA), NOT from a real UN DSA table.
   // Must be checked against the current DSA schedule before use in a real proposal.
@@ -48,9 +49,9 @@ window.CGT = (function () {
 
   const TIERS = {
     foundational:{name:'Foundational', desc:'The essentials: a clear care map and the gaps it reveals.',
-      analysis:'foundational', reporting:'light', support:'handover', climate:false, dual:false},
+      analysis:'foundational', reporting:'light', support:'handover', climate:false, dual:false, rec:true},
     standard:{name:'Standard', desc:'The full picture: climate risk, a public map and a year of support.',
-      analysis:'standard', reporting:'standard', support:'standard', climate:true, dual:true, rec:true},
+      analysis:'standard', reporting:'standard', support:'standard', climate:true, dual:true},
     comprehensive:{name:'Comprehensive', desc:'Deep analysis, planning tools and ongoing partnership.',
       analysis:'comprehensive', reporting:'comprehensive', support:'comprehensive', climate:true, dual:true},
   };
@@ -65,8 +66,8 @@ window.CGT = (function () {
     // o: {areaKey,popKey,terrainKey,dataKey,catsKey,analysisKey,reportingKey,supportKey,climate,dual,rate,
     //     regionalSupport, travel:{flightCost,dsaPerNight,nightsPerMission,missions,travelers}}
     const area=M.area[o.areaKey], pop=M.pop[o.popKey], terrain=M.terrain[o.terrainKey],
-        data=M.data[o.dataKey], cats=M.cats[o.catsKey],
-        analysis=M.analysis[o.analysisKey], reporting=M.reporting[o.reportingKey], support=M.support[o.supportKey];
+          data=M.data[o.dataKey], cats=M.cats[o.catsKey],
+          analysis=M.analysis[o.analysisKey], reporting=M.reporting[o.reportingKey], support=M.support[o.supportKey];
     const climate=!!o.climate, dual=!!o.dual, rate=Math.max(50, o.rate||RATE_DEFAULT);
     const days = [
       PHASES[0].base*(1+(area-1)*0.2),
@@ -136,6 +137,6 @@ window.CGT = (function () {
   };
 
   return {RATE_DEFAULT,PHASES,M,SUPPORT_RECUR,DATA_ACQ,TIERS,ORDER,DELIV,PRESETS,
-    REGIONAL_SUPPORT_DEFAULT,TRAVEL_DEFAULTS,travelCost,
-    compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
+          REGIONAL_SUPPORT_DEFAULT,REGIONAL_SUPPORT_RANGE,TRAVEL_DEFAULTS,travelCost,
+          compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
 })();

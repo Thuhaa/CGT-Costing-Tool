@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CGT Costing · Internal</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="cgt.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGT Costing · Internal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="cgt.css">
 </head>
 <body>
 
@@ -20,157 +20,157 @@
 </nav>
 
 <section class="section pt-5">
-  <div class="container">
-    <p class="eyebrow">Internal · not for clients</p>
-    <h1 class="title is-3 page-title">Implementation cost model</h1>
-    <p class="subtitle is-6 muted">Full mechanics, person-days, day rate and exact figures. For UNDP estimating and calibration.</p>
+<div class="container">
+  <p class="eyebrow">Internal · not for clients</p>
+  <h1 class="title is-3 page-title">Implementation cost model</h1>
+  <p class="subtitle is-6 muted">Full mechanics, person-days, day rate and exact figures. For UNDP estimating and calibration.</p>
 
-    <div class="columns mt-2">
-      <div class="column is-3">
-        <div class="box">
-          <p class="eyebrow mb-3">Context</p>
-          <div class="field"><label class="label is-small">Territory size</label><div class="select is-small is-fullwidth"><select id="area"><option value="small">Single city / small</option><option value="medium" selected>Large city / metro</option><option value="large">Province / state</option><option value="vlarge">National</option></select></div></div>
-          <div class="field"><label class="label is-small">Population</label><div class="select is-small is-fullwidth"><select id="pop"><option value="p1">&lt;100k</option><option value="p2" selected>100k–500k</option><option value="p3">500k–2M</option><option value="p4">&gt;2M</option></select></div></div>
-          <div class="field"><label class="label is-small">Geographic complexity</label><div class="select is-small is-fullwidth"><select id="terrain"><option value="flat">Flat</option><option value="moderate" selected>Moderate</option><option value="mountain">Mountainous</option></select></div></div>
-          <div class="field"><label class="label is-small">Data availability</label><div class="select is-small is-fullwidth"><select id="data"><option value="good">Good</option><option value="moderate" selected>Partial</option><option value="poor">Poor / field</option></select></div></div>
-          <div class="field"><label class="label is-small">Care categories</label><div class="select is-small is-fullwidth"><select id="cats"><option value="one">One</option><option value="two" selected>Two</option><option value="three">Three+</option></select></div></div>
+  <div class="columns mt-2">
+    <div class="column is-3">
+      <div class="box">
+        <p class="eyebrow mb-3">Context</p>
+        <div class="field"><label class="label is-small">Territory size</label><div class="select is-small is-fullwidth"><select id="area"><option value="small">Single city / small</option><option value="medium" selected>Large city / metro</option><option value="large">Province / state</option><option value="vlarge">National</option></select></div></div>
+        <div class="field"><label class="label is-small">Population</label><div class="select is-small is-fullwidth"><select id="pop"><option value="p1">&lt;100k</option><option value="p2" selected>100k–500k</option><option value="p3">500k–2M</option><option value="p4">&gt;2M</option></select></div></div>
+        <div class="field"><label class="label is-small">Geographic complexity</label><div class="select is-small is-fullwidth"><select id="terrain"><option value="flat">Flat</option><option value="moderate" selected>Moderate</option><option value="mountain">Mountainous</option></select></div></div>
+        <div class="field"><label class="label is-small">Data availability</label><div class="select is-small is-fullwidth"><select id="data"><option value="good">Good</option><option value="moderate" selected>Partial</option><option value="poor">Poor / field</option></select></div></div>
+        <div class="field"><label class="label is-small">Care categories</label><div class="select is-small is-fullwidth"><select id="cats"><option value="one">One</option><option value="two" selected>Two</option><option value="three">Three+</option></select></div></div>
 
-          <hr>
-          <p class="eyebrow mb-3">Service level</p>
-          <div class="field"><label class="label is-small">Analysis depth</label><div class="select is-small is-fullwidth"><select id="analysis"><option value="foundational">Foundational</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
-          <div class="field"><label class="label is-small">Reporting</label><div class="select is-small is-fullwidth"><select id="reporting"><option value="light">Light</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
-          <div class="field"><label class="label is-small">Support</label><div class="select is-small is-fullwidth"><select id="support"><option value="handover">Handover</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
-          <div class="field"><label class="checkbox is-small"><input type="checkbox" id="climate" checked> Climate layer</label></div>
-          <div class="field"><label class="checkbox is-small"><input type="checkbox" id="dual" checked> Public citizen map</label></div>
+        <hr>
+        <p class="eyebrow mb-3">Service level</p>
+        <div class="field"><label class="label is-small">Analysis depth</label><div class="select is-small is-fullwidth"><select id="analysis"><option value="foundational">Foundational</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
+        <div class="field"><label class="label is-small">Reporting</label><div class="select is-small is-fullwidth"><select id="reporting"><option value="light">Light</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
+        <div class="field"><label class="label is-small">Support</label><div class="select is-small is-fullwidth"><select id="support"><option value="handover">Handover</option><option value="standard" selected>Standard</option><option value="comprehensive">Comprehensive</option></select></div></div>
+        <div class="field"><label class="checkbox is-small"><input type="checkbox" id="climate" checked> Climate layer</label></div>
+        <div class="field"><label class="checkbox is-small"><input type="checkbox" id="dual" checked> Public citizen map</label></div>
 
-          <hr>
-          <div class="field"><label class="label is-small">Blended day rate (USD)</label><input class="input is-small" type="number" id="rate" value="300" min="50" step="25"></div>
+        <hr>
+        <div class="field"><label class="label is-small">Blended day rate (USD)</label><input class="input is-small" type="number" id="rate" value="300" min="50" step="25"></div>
 
-          <hr>
-          <p class="eyebrow mb-3">Regional support &amp; travel <span style="color:var(--gold);font-weight:700;">·</span></p>
-          <div class="field"><label class="label is-small">Regional technical support (USD, one-time)</label><input class="input is-small" type="number" id="regionalSupport" value="15000" min="0" step="500"></div>
-          <p class="muted is-size-7 mb-3">Confirmed input (June 2026): labour only, set-up phase. Travel below is separate.</p>
-          <div class="field"><label class="label is-small">Flight cost (USD, return)</label><input class="input is-small" type="number" id="flightCost" value="700" min="0" step="50"></div>
-          <div class="field"><label class="label is-small">DSA per night (USD)</label><input class="input is-small" type="number" id="dsaPerNight" value="200" min="0" step="10"></div>
-          <div class="field"><label class="label is-small">Nights per mission</label><input class="input is-small" type="number" id="nightsPerMission" value="6" min="0" step="1"></div>
-          <div class="field"><label class="label is-small">Number of missions</label><input class="input is-small" type="number" id="missions" value="2" min="0" step="1"></div>
-          <div class="field"><label class="label is-small">Travelers per mission</label><input class="input is-small" type="number" id="travelers" value="1" min="0" step="1"></div>
-          <p class="muted is-size-7">Travel is illustrative (flight + DSA placeholder), not from a live UN DSA table. Check against the current schedule before use.</p>
-        </div>
-      </div>
-
-      <div class="column is-9">
-        <div class="columns">
-          <div class="column"><div class="box kpi" style="--accent:var(--blue)"><div class="kl">Set-up (exact)</div><div class="kv" id="kSetup">—</div><div class="kr" id="kSetupR"></div></div></div>
-          <div class="column"><div class="box kpi" style="--accent:var(--teal)"><div class="kl">Annual running</div><div class="kv" id="kRecur">—</div><div class="kr" id="kRecurR"></div></div></div>
-          <div class="column"><div class="box kpi" style="--accent:var(--gold)"><div class="kl">First-year</div><div class="kv" id="kFirst">—</div><div class="kr">set-up + 1 yr</div></div></div>
-          <div class="column"><div class="box kpi" style="--accent:var(--orange)"><div class="kl">Person-days</div><div class="kv" id="kDays">—</div><div class="kr">total effort</div></div></div>
-        </div>
-
-        <div class="box">
-          <h3 class="eyebrow">Effort by phase</h3>
-          <p class="muted is-size-7 mb-4">Person-days across the seven-phase methodology.</p>
-          <div id="phaseBars"></div>
-        </div>
-
-        <div class="columns">
-          <div class="column is-7"><div class="box"><h3 class="eyebrow">Cost over five years</h3><p class="muted is-size-7 mb-4">Cumulative, set-up plus annual running.</p><div id="lineChart"></div></div></div>
-          <div class="column is-5"><div class="box"><h3 class="eyebrow">First-year composition</h3><p class="muted is-size-7 mb-4">Where the first year's budget goes.</p><div class="stack" id="stack"></div><div id="legend"></div></div></div>
-        </div>
-
-        <div class="box">
-          <div class="label-row" style="justify-content:space-between;align-items:center">
-            <h3 class="eyebrow">Model assumptions &amp; multipliers</h3>
-            <button class="button is-small" id="toggleAssump">Hide</button>
-          </div>
-          <p class="muted is-size-7 mb-4">The baselines and multipliers behind every estimate, shown directly from the model. Illustrative, pending calibration against real pilot costs.</p>
-          <div id="assumpBody">
-            <div class="columns">
-              <div class="column is-4">
-                <p class="eyebrow mb-2" style="color:var(--teal)">Phase baselines</p>
-                <table class="table is-fullwidth is-narrow is-size-7" id="tBase"></table>
-              </div>
-              <div class="column is-8">
-                <p class="eyebrow mb-2" style="color:var(--teal)">Context &amp; service multipliers</p>
-                <table class="table is-fullwidth is-narrow is-size-7" id="tMult"></table>
-              </div>
-            </div>
-            <p class="eyebrow mb-2" style="color:var(--teal)">Unit &amp; recurring costs</p>
-            <table class="table is-fullwidth is-narrow is-size-7" id="tCost"></table>
-          </div>
-        </div>
-
-        <div class="note-box">Baseline effort and multipliers are structural placeholders. Calibrate against actual Bhutan and Malaysia costs, and confirm what is in scope (fieldwork, regional team support, recurring costs) before using these figures in proposals.</div>
+        <hr>
+        <p class="eyebrow mb-3">Regional support &amp; travel <span style="color:var(--gold);font-weight:700;">·</span></p>
+        <div class="field"><label class="label is-small">Regional technical support (USD, one-time)</label><input class="input is-small" type="number" id="regionalSupport" value="15000" min="15000" max="25000" step="500"></div>
+        <p class="muted is-size-7 mb-3">Confirmed range (June 2026): USD 15,000–25,000, labour only, set-up phase. Defaulted to the low end; adjust within the confirmed range as scope is clarified. Travel below is separate.</p>
+        <div class="field"><label class="label is-small">Flight cost (USD, return)</label><input class="input is-small" type="number" id="flightCost" value="700" min="0" step="50"></div>
+        <div class="field"><label class="label is-small">DSA per night (USD)</label><input class="input is-small" type="number" id="dsaPerNight" value="200" min="0" step="10"></div>
+        <div class="field"><label class="label is-small">Nights per mission</label><input class="input is-small" type="number" id="nightsPerMission" value="6" min="0" step="1"></div>
+        <div class="field"><label class="label is-small">Number of missions</label><input class="input is-small" type="number" id="missions" value="2" min="0" step="1"></div>
+        <div class="field"><label class="label is-small">Travelers per mission</label><input class="input is-small" type="number" id="travelers" value="1" min="0" step="1"></div>
+        <p class="muted is-size-7">Travel is illustrative (flight + DSA placeholder), not from a live UN DSA table. Check against the current schedule before use.</p>
       </div>
     </div>
+
+    <div class="column is-9">
+      <div class="columns">
+        <div class="column"><div class="box kpi" style="--accent:var(--blue)"><div class="kl">Set-up (exact)</div><div class="kv" id="kSetup">—</div><div class="kr" id="kSetupR"></div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--teal)"><div class="kl">Annual running</div><div class="kv" id="kRecur">—</div><div class="kr" id="kRecurR"></div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--gold)"><div class="kl">First-year</div><div class="kv" id="kFirst">—</div><div class="kr">set-up + 1 yr</div></div></div>
+        <div class="column"><div class="box kpi" style="--accent:var(--orange)"><div class="kl">Person-days</div><div class="kv" id="kDays">—</div><div class="kr">total effort</div></div></div>
+      </div>
+
+      <div class="box">
+        <h3 class="eyebrow">Effort by phase</h3>
+        <p class="muted is-size-7 mb-4">Person-days across the seven-phase methodology.</p>
+        <div id="phaseBars"></div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-7"><div class="box"><h3 class="eyebrow">Cost over five years</h3><p class="muted is-size-7 mb-4">Cumulative, set-up plus annual running.</p><div id="lineChart"></div></div></div>
+        <div class="column is-5"><div class="box"><h3 class="eyebrow">First-year composition</h3><p class="muted is-size-7 mb-4">Where the first year's budget goes.</p><div class="stack" id="stack"></div><div id="legend"></div></div></div>
+      </div>
+
+      <div class="box">
+        <div class="label-row" style="justify-content:space-between;align-items:center">
+          <h3 class="eyebrow">Model assumptions &amp; multipliers</h3>
+          <button class="button is-small" id="toggleAssump">Hide</button>
+        </div>
+        <p class="muted is-size-7 mb-4">The baselines and multipliers behind every estimate, shown directly from the model. Illustrative, pending calibration against real pilot costs.</p>
+        <div id="assumpBody">
+          <div class="columns">
+            <div class="column is-4">
+              <p class="eyebrow mb-2" style="color:var(--teal)">Phase baselines</p>
+              <table class="table is-fullwidth is-narrow is-size-7" id="tBase"></table>
+            </div>
+            <div class="column is-8">
+              <p class="eyebrow mb-2" style="color:var(--teal)">Context &amp; service multipliers</p>
+              <table class="table is-fullwidth is-narrow is-size-7" id="tMult"></table>
+            </div>
+          </div>
+          <p class="eyebrow mb-2" style="color:var(--teal)">Unit &amp; recurring costs</p>
+          <table class="table is-fullwidth is-narrow is-size-7" id="tCost"></table>
+        </div>
+      </div>
+
+      <div class="note-box">Baseline effort and multipliers are structural placeholders. Calibrate against actual Bhutan and Malaysia costs, and confirm what is in scope (fieldwork, regional team support, recurring costs) before using these figures in proposals.</div>
+    </div>
   </div>
+</div>
 </section>
 
 <script src="costing.js"></script>
 <script>
-  const $=id=>document.getElementById(id);
-  function opts(){return{areaKey:$('area').value,popKey:$('pop').value,terrainKey:$('terrain').value,dataKey:$('data').value,catsKey:$('cats').value,
-    analysisKey:$('analysis').value,reportingKey:$('reporting').value,supportKey:$('support').value,climate:$('climate').checked,dual:$('dual').checked,rate:+$('rate').value||300,
-    regionalSupport:+$('regionalSupport').value||0,
-    travel:{flightCost:+$('flightCost').value||0,dsaPerNight:+$('dsaPerNight').value||0,nightsPerMission:+$('nightsPerMission').value||0,missions:+$('missions').value||0,travelers:+$('travelers').value||0}};}
-  function render(){
-    const r=CGT.compute(opts());
-    CGT.animate($('kSetup'),r.setup,CGT.money);
-    CGT.animate($('kRecur'),r.recur,v=>CGT.money(v)+'/yr');
-    CGT.animate($('kFirst'),r.first,CGT.money);
-    CGT.animate($('kDays'),r.totalDays,v=>Math.round(v));
-    $('kSetupR').textContent=CGT.money(r.setup*0.75)+' – '+CGT.money(r.setup*1.35);
-    $('kRecurR').textContent=CGT.money(r.recur*0.8)+' – '+CGT.money(r.recur*1.3);
-    const maxd=Math.max(...r.days);
-    $('phaseBars').innerHTML=CGT.PHASES.map((p,i)=>{const d=r.days[i],w=(d/maxd*100).toFixed(1);
-      return `<div class="pbar"><div class="pt"><span class="nm">${p.n}</span><span class="dy">${Math.round(d)} days</span></div><div class="ptrack"><div class="pfill" style="width:${w}%;background:${p.c}"></div></div></div>`;}).join('');
-    $('lineChart').innerHTML=CGT.lineChart(r.setup,r.recur,560,180);
-    const comp=[{nm:'Personnel',v:r.labour,c:'#006EB5'},{nm:'Data acquisition',v:r.dataAcq,c:'#009EDB'},{nm:'Platform set-up',v:r.platform,c:'#008080'},{nm:'Regional technical support',v:r.regionalSupport,c:'#6B4C9A'},{nm:'Travel & DSA',v:r.travel,c:'#C0392B'},{nm:'Hosting',v:r.hosting,c:'#C9A84C'},{nm:'Maintenance & support',v:r.maintenance+r.supportR+r.dataRefresh,c:'#E8872A'}];
-    const tot=comp.reduce((a,b)=>a+b.v,0);
-    $('stack').innerHTML=comp.map(c=>`<div style="width:${(c.v/tot*100).toFixed(2)}%;background:${c.c}"></div>`).join('');
-    $('legend').innerHTML=comp.map(c=>`<div class="lg"><span class="ll"><span class="dot" style="background:${c.c}"></span>${c.nm}</span><span class="lv">${CGT.money(c.v)}</span></div>`).join('');
-  }
-  document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',render));
-  render();
+const $=id=>document.getElementById(id);
+function opts(){return{areaKey:$('area').value,popKey:$('pop').value,terrainKey:$('terrain').value,dataKey:$('data').value,catsKey:$('cats').value,
+  analysisKey:$('analysis').value,reportingKey:$('reporting').value,supportKey:$('support').value,climate:$('climate').checked,dual:$('dual').checked,rate:+$('rate').value||300,
+  regionalSupport:+$('regionalSupport').value||0,
+  travel:{flightCost:+$('flightCost').value||0,dsaPerNight:+$('dsaPerNight').value||0,nightsPerMission:+$('nightsPerMission').value||0,missions:+$('missions').value||0,travelers:+$('travelers').value||0}};}
+function render(){
+  const r=CGT.compute(opts());
+  CGT.animate($('kSetup'),r.setup,CGT.money);
+  CGT.animate($('kRecur'),r.recur,v=>CGT.money(v)+'/yr');
+  CGT.animate($('kFirst'),r.first,CGT.money);
+  CGT.animate($('kDays'),r.totalDays,v=>Math.round(v));
+  $('kSetupR').textContent=CGT.money(r.setup*0.75)+' – '+CGT.money(r.setup*1.35);
+  $('kRecurR').textContent=CGT.money(r.recur*0.8)+' – '+CGT.money(r.recur*1.3);
+  const maxd=Math.max(...r.days);
+  $('phaseBars').innerHTML=CGT.PHASES.map((p,i)=>{const d=r.days[i],w=(d/maxd*100).toFixed(1);
+    return `<div class="pbar"><div class="pt"><span class="nm">${p.n}</span><span class="dy">${Math.round(d)} days</span></div><div class="ptrack"><div class="pfill" style="width:${w}%;background:${p.c}"></div></div></div>`;}).join('');
+  $('lineChart').innerHTML=CGT.lineChart(r.setup,r.recur,560,180);
+  const comp=[{nm:'Personnel',v:r.labour,c:'#006EB5'},{nm:'Data acquisition',v:r.dataAcq,c:'#009EDB'},{nm:'Platform set-up',v:r.platform,c:'#008080'},{nm:'Regional technical support',v:r.regionalSupport,c:'#6B4C9A'},{nm:'Travel & DSA',v:r.travel,c:'#C0392B'},{nm:'Hosting',v:r.hosting,c:'#C9A84C'},{nm:'Maintenance & support',v:r.maintenance+r.supportR+r.dataRefresh,c:'#E8872A'}];
+  const tot=comp.reduce((a,b)=>a+b.v,0);
+  $('stack').innerHTML=comp.map(c=>`<div style="width:${(c.v/tot*100).toFixed(2)}%;background:${c.c}"></div>`).join('');
+  $('legend').innerHTML=comp.map(c=>`<div class="lg"><span class="ll"><span class="dot" style="background:${c.c}"></span>${c.nm}</span><span class="lv">${CGT.money(c.v)}</span></div>`).join('');
+}
+document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',render));
+render();
 
-  // ---- assumptions panel (renders from the model so it stays in sync) ----
-  const LBL={
-    area:{label:'Territory size',affects:'Scoping, Supply, Accessibility',opt:{small:'Single city',medium:'Large city / metro',large:'Province / state',vlarge:'National'}},
-    pop:{label:'Population',affects:'Supply, Demand, Validation',opt:{p1:'Under 100k',p2:'100k–500k',p3:'500k–2M',p4:'Over 2M'}},
-    terrain:{label:'Geographic complexity',affects:'Accessibility',opt:{flat:'Flat',moderate:'Moderate',mountain:'Mountainous'}},
-    data:{label:'Data availability',affects:'Supply, Demand, Validation',opt:{good:'Good',moderate:'Partial',poor:'Poor / field'}},
-    cats:{label:'Care categories',affects:'Adaptation, Supply, Demand',opt:{one:'One',two:'Two',three:'Three+'}},
-    analysis:{label:'Analysis depth',affects:'Demand, Accessibility',opt:{foundational:'Foundational',standard:'Standard',comprehensive:'Comprehensive'}},
-    reporting:{label:'Reporting level',affects:'Care Map & visualisation',opt:{light:'Light',standard:'Standard',comprehensive:'Comprehensive'}},
-    support:{label:'Support level',affects:'Validation + recurring',opt:{handover:'Handover',standard:'Standard',comprehensive:'Comprehensive'}},
-  };
-  function renderAssumptions(){
-    $('tBase').innerHTML='<thead><tr><th>Phase</th><th class="has-text-right">Base days</th></tr></thead><tbody>'+
-            CGT.PHASES.map(p=>`<tr><td>${p.n}</td><td class="has-text-right">${p.base}</td></tr>`).join('')+
-            `<tr><td><strong>Reference total</strong></td><td class="has-text-right"><strong>${CGT.PHASES.reduce((a,b)=>a+b.base,0)}</strong></td></tr></tbody>`;
-    let rows='';
-    for(const k in CGT.M){
-      const meta=LBL[k], vals=CGT.M[k];
-      const cells=Object.keys(vals).map(o=>`${meta.opt[o]} ×${vals[o]}`).join(' · ');
-      rows+=`<tr><td><strong>${meta.label}</strong></td><td>${cells}</td><td class="muted">${meta.affects}</td></tr>`;
-    }
-    $('tMult').innerHTML='<thead><tr><th>Driver</th><th>Values</th><th>Affects</th></tr></thead><tbody>'+rows+'</tbody>';
-    const da=CGT.DATA_ACQ, sr=CGT.SUPPORT_RECUR, tv=CGT.TRAVEL_DEFAULTS;
-    $('tCost').innerHTML='<thead><tr><th>Item</th><th>Basis</th></tr></thead><tbody>'+[
-      ['Blended day rate','$'+CGT.RATE_DEFAULT+' / day (editable above; placeholder)'],
-      ['Regional technical support','$'+CGT.REGIONAL_SUPPORT_DEFAULT.toLocaleString()+' one-time (editable above; CONFIRMED June 2026 \u2014 labour only, set-up phase)'],
-      ['Travel & DSA (set-up)','Flight $'+tv.flightCost+' + DSA $'+tv.dsaPerNight+'/night \u00d7 '+tv.nightsPerMission+' nights, \u00d7 '+tv.missions+' missions \u00d7 '+tv.travelers+' traveler(s) (editable above; ILLUSTRATIVE, not a live DSA table)'],
-      ['Data acquisition (set-up)','Good $'+da.good.toLocaleString()+' \u00b7 Partial $'+da.moderate.toLocaleString()+' \u00b7 Poor $'+da.poor.toLocaleString()+', \u00d7 category factor; +$2,000 if climate layer'],
-      ['Platform set-up','$2,500 base, $6,000 with public map, +$500 API'],
-      ['Hosting (annual)','$1,500, or $4,000 with public map'],
-      ['Data refresh (annual)','~15% of total effort \u00d7 day rate'],
-      ['Maintenance (annual)','12 days (20 with public map) \u00d7 rate \u00d7 support multiplier'],
-      ['Support (annual)','Handover $'+sr.handover.toLocaleString()+' \u00b7 Standard $'+sr.standard.toLocaleString()+' \u00b7 Comprehensive $'+sr.comprehensive.toLocaleString()],
-    ].map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td></tr>`).join('')+'</tbody>';
+// ---- assumptions panel (renders from the model so it stays in sync) ----
+const LBL={
+  area:{label:'Territory size',affects:'Scoping, Supply, Accessibility',opt:{small:'Single city',medium:'Large city / metro',large:'Province / state',vlarge:'National'}},
+  pop:{label:'Population',affects:'Supply, Demand, Validation',opt:{p1:'Under 100k',p2:'100k–500k',p3:'500k–2M',p4:'Over 2M'}},
+  terrain:{label:'Geographic complexity',affects:'Accessibility',opt:{flat:'Flat',moderate:'Moderate',mountain:'Mountainous'}},
+  data:{label:'Data availability',affects:'Supply, Demand, Validation',opt:{good:'Good',moderate:'Partial',poor:'Poor / field'}},
+  cats:{label:'Care categories',affects:'Adaptation, Supply, Demand',opt:{one:'One',two:'Two',three:'Three+'}},
+  analysis:{label:'Analysis depth',affects:'Demand, Accessibility',opt:{foundational:'Foundational',standard:'Standard',comprehensive:'Comprehensive'}},
+  reporting:{label:'Reporting level',affects:'Care Map & visualisation',opt:{light:'Light',standard:'Standard',comprehensive:'Comprehensive'}},
+  support:{label:'Support level',affects:'Validation + recurring',opt:{handover:'Handover',standard:'Standard',comprehensive:'Comprehensive'}},
+};
+function renderAssumptions(){
+  $('tBase').innerHTML='<thead><tr><th>Phase</th><th class="has-text-right">Base days</th></tr></thead><tbody>'+
+    CGT.PHASES.map(p=>`<tr><td>${p.n}</td><td class="has-text-right">${p.base}</td></tr>`).join('')+
+    `<tr><td><strong>Reference total</strong></td><td class="has-text-right"><strong>${CGT.PHASES.reduce((a,b)=>a+b.base,0)}</strong></td></tr></tbody>`;
+  let rows='';
+  for(const k in CGT.M){
+    const meta=LBL[k], vals=CGT.M[k];
+    const cells=Object.keys(vals).map(o=>`${meta.opt[o]} ×${vals[o]}`).join(' · ');
+    rows+=`<tr><td><strong>${meta.label}</strong></td><td>${cells}</td><td class="muted">${meta.affects}</td></tr>`;
   }
-  renderAssumptions();
-  $('toggleAssump').addEventListener('click',()=>{const b=$('assumpBody'),t=$('toggleAssump');
-    if(b.style.display==='none'){b.style.display='';t.textContent='Hide';}else{b.style.display='none';t.textContent='Show';}});
+  $('tMult').innerHTML='<thead><tr><th>Driver</th><th>Values</th><th>Affects</th></tr></thead><tbody>'+rows+'</tbody>';
+  const da=CGT.DATA_ACQ, sr=CGT.SUPPORT_RECUR, tv=CGT.TRAVEL_DEFAULTS;
+  $('tCost').innerHTML='<thead><tr><th>Item</th><th>Basis</th></tr></thead><tbody>'+[
+    ['Blended day rate','$'+CGT.RATE_DEFAULT+' / day (editable above; placeholder)'],
+    ['Regional technical support','$'+CGT.REGIONAL_SUPPORT_RANGE.low.toLocaleString()+' \u2013 $'+CGT.REGIONAL_SUPPORT_RANGE.high.toLocaleString()+' one-time (editable above, default $'+CGT.REGIONAL_SUPPORT_DEFAULT.toLocaleString()+'; CONFIRMED RANGE June 2026 \u2014 labour only, set-up phase)'],
+    ['Travel & DSA (set-up)','Flight $'+tv.flightCost+' + DSA $'+tv.dsaPerNight+'/night \u00d7 '+tv.nightsPerMission+' nights, \u00d7 '+tv.missions+' missions \u00d7 '+tv.travelers+' traveler(s) (editable above; ILLUSTRATIVE, not a live DSA table)'],
+    ['Data acquisition (set-up)','Good $'+da.good.toLocaleString()+' \u00b7 Partial $'+da.moderate.toLocaleString()+' \u00b7 Poor $'+da.poor.toLocaleString()+', \u00d7 category factor; +$2,000 if climate layer'],
+    ['Platform set-up','$2,500 base, $6,000 with public map, +$500 API'],
+    ['Hosting (annual)','$1,500, or $4,000 with public map'],
+    ['Data refresh (annual)','~15% of total effort \u00d7 day rate'],
+    ['Maintenance (annual)','12 days (20 with public map) \u00d7 rate \u00d7 support multiplier'],
+    ['Support (annual)','Handover $'+sr.handover.toLocaleString()+' \u00b7 Standard $'+sr.standard.toLocaleString()+' \u00b7 Comprehensive $'+sr.comprehensive.toLocaleString()],
+  ].map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td></tr>`).join('')+'</tbody>';
+}
+renderAssumptions();
+$('toggleAssump').addEventListener('click',()=>{const b=$('assumpBody'),t=$('toggleAssump');
+  if(b.style.display==='none'){b.style.display='';t.textContent='Hide';}else{b.style.display='none';t.textContent='Show';}});
 </script>
 </body>
 </html>

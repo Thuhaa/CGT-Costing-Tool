@@ -31,6 +31,8 @@ window.CGT = (function () {
   // is documented and editable in the internal tool.
   const REGIONAL_SUPPORT_DEFAULT = 15000;
   const REGIONAL_SUPPORT_RANGE = { low: 15000, high: 25000 };
+  // Per-package regional technical support (labour only, one-time, set-up phase).
+  const REGIONAL_SUPPORT_TIER = { foundational: 15000, standard: 20000, comprehensive: 25000 };
 
   // Travel: illustrative placeholder (flight + DSA), NOT from a real UN DSA table.
   // Must be checked against the current DSA schedule before use in a real proposal.
@@ -130,9 +132,11 @@ window.CGT = (function () {
 
   function computeTier(tierKey, ctx, rate, regionalSupport, travel) {
     const t = TIERS[tierKey];
+    const rs = regionalSupport != null ? regionalSupport
+      : (REGIONAL_SUPPORT_TIER[tierKey] != null ? REGIONAL_SUPPORT_TIER[tierKey] : REGIONAL_SUPPORT_DEFAULT);
     return compute({areaKey:ctx.areaKey,popKey:ctx.popKey,terrainKey:ctx.terrainKey,dataKey:ctx.dataKey,catsKey:ctx.catsKey,
       analysisKey:t.analysis,reportingKey:t.reporting,supportKey:t.support,climate:t.climate,dual:t.dual,
-      rate:rate||RATE_DEFAULT, regionalSupport, travel});
+      rate:rate||RATE_DEFAULT, regionalSupport:rs, travel});
   }
 
   const kfmt = n => '$' + Math.round(n/1000) + 'k';
@@ -175,6 +179,6 @@ window.CGT = (function () {
   };
 
   return {RATE_DEFAULT,PHASES,M,SUPPORT_RECUR,DATA_ACQ,TIERS,ORDER,DELIV,PRESETS,
-    REGIONAL_SUPPORT_DEFAULT,REGIONAL_SUPPORT_RANGE,TRAVEL_DEFAULTS,travelCost,
+    REGIONAL_SUPPORT_DEFAULT,REGIONAL_SUPPORT_RANGE,REGIONAL_SUPPORT_TIER,TRAVEL_DEFAULTS,travelCost,
     compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
 })();

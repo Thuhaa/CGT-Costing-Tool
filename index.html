@@ -190,7 +190,7 @@
       { name: 'Core Personnel & Mapping Effort', val: r.labour },
       { name: 'Data Acquisition & Base Layers', val: r.dataAcq },
       { name: 'Platform Setup & Customization', val: r.platform },
-      { name: 'Regional Technical Backstopping', val: r.regionalSupport },
+      { name: 'Regional Technical Backstopping', val: r.regionalSupport, exact: true },
       { name: 'Onsite Scoping Missions & Travel', val: r.travel }
     ];
     const recurItems = [
@@ -209,7 +209,7 @@
         <div class="breakdown-row">
           <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;" class="is-size-7 mb-1">
             <span class="has-text-weight-semibold" style="color:var(--navy2);">${x.name}</span>
-            <span class="has-text-weight-bold" style="color:var(--blue); white-space: nowrap;">${CGT.rng(x.val, 0.871, 1.088)}</span>
+            <span class="has-text-weight-bold" style="color:var(--blue); white-space: nowrap;">${x.exact ? CGT.kfmt(x.val) : CGT.rng(x.val, 0.871, 1.088)}</span>
           </div>
           <div class="mini-track">
             <div class="mini-fill" style="width:${pct.toFixed(0)}%; background:var(--blue);"></div>

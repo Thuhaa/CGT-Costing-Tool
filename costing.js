@@ -46,28 +46,63 @@ window.CGT = (function () {
     return (t.flightCost + t.dsaPerNight * t.nightsPerMission) * t.missions * t.travelers;
   }
 
-
   const TIERS = {
     foundational:{name:'Foundational', desc:'The essentials: a clear care map and the gaps it reveals.',
-      analysis:'foundational', reporting:'light', support:'handover', climate:false, dual:false, rec:true},
+      analysis:'foundational', reporting:'light', support:'handover', climate:false, dual:false},
     standard:{name:'Standard', desc:'The full picture: climate risk, a public map and a year of support.',
-      analysis:'standard', reporting:'standard', support:'standard', climate:true, dual:true},
+      analysis:'standard', reporting:'standard', support:'standard', climate:true, dual:true, rec:true},
     comprehensive:{name:'Comprehensive', desc:'Deep analysis, planning tools and ongoing partnership.',
       analysis:'comprehensive', reporting:'comprehensive', support:'comprehensive', climate:true, dual:true},
   };
   const ORDER = ['foundational','standard','comprehensive'];
+
   const DELIV = {
-    foundational:['Care supply, demand & accessibility mapping','Care desert identification','Internal planning map','Summary findings report','Initial team training'],
-    standard:['Everything in Foundational','Climate & compound-vulnerability layer','Public citizen-facing map','Equity & inclusion analysis','Policy brief with recommendations','Structured user testing','One year of technical support'],
-    comprehensive:['Everything in Standard','Scenario & investment modelling','Custom planning dashboards','Prioritised investment plan','Extended, ongoing support','Repeated capacity building'],
+    foundational:[
+      'Care supply, demand & accessibility mapping',
+      'Care desert identification',
+      'Internal planning map',
+      'Summary findings report',
+      'Initial team training'
+    ],
+    standard:[
+      'Care supply, demand & accessibility mapping',
+      'Care desert identification',
+      'Internal planning map',
+      'Summary findings report',
+      'Initial team training',
+      'Climate & compound-vulnerability layer',
+      'Public citizen-facing map',
+      'Equity & inclusion analysis',
+      'Policy brief with recommendations',
+      'Structured user testing',
+      'One year of technical support'
+    ],
+    comprehensive:[
+      'Care supply, demand & accessibility mapping',
+      'Care desert identification',
+      'Internal planning map',
+      'Summary findings report',
+      'Initial team training',
+      'Climate & compound-vulnerability layer',
+      'Public citizen-facing map',
+      'Equity & inclusion analysis',
+      'Policy brief with recommendations',
+      'Structured user testing',
+      'One year of technical support',
+      'Scenario & investment modelling',
+      'Custom planning dashboards',
+      'Prioritised investment plan',
+      'Extended, ongoing support',
+      'Repeated capacity building'
+    ],
   };
 
   function compute(o) {
     // o: {areaKey,popKey,terrainKey,dataKey,catsKey,analysisKey,reportingKey,supportKey,climate,dual,rate,
     //     regionalSupport, travel:{flightCost,dsaPerNight,nightsPerMission,missions,travelers}}
     const area=M.area[o.areaKey], pop=M.pop[o.popKey], terrain=M.terrain[o.terrainKey],
-          data=M.data[o.dataKey], cats=M.cats[o.catsKey],
-          analysis=M.analysis[o.analysisKey], reporting=M.reporting[o.reportingKey], support=M.support[o.supportKey];
+        data=M.data[o.dataKey], cats=M.cats[o.catsKey],
+        analysis=M.analysis[o.analysisKey], reporting=M.reporting[o.reportingKey], support=M.support[o.supportKey];
     const climate=!!o.climate, dual=!!o.dual, rate=Math.max(50, o.rate||RATE_DEFAULT);
     const days = [
       PHASES[0].base*(1+(area-1)*0.2),
@@ -102,7 +137,10 @@ window.CGT = (function () {
 
   const kfmt = n => '$' + Math.round(n/1000) + 'k';
   const money = n => '$' + (Math.round(n/100)*100).toLocaleString();
-  const rng = (e,lo,hi) => kfmt(e*lo) + ' – ' + kfmt(e*hi);
+  const rng = (e,lo,hi) => {
+    const l = kfmt(e*lo), h = kfmt(e*hi);
+    return l === h ? l : l + ' – ' + h;
+  };
 
   function lineChart(setup, recur, W, H) {
     W=W||820; H=H||180; const pL=44,pR=16,pT=14,pB=30;
@@ -137,6 +175,6 @@ window.CGT = (function () {
   };
 
   return {RATE_DEFAULT,PHASES,M,SUPPORT_RECUR,DATA_ACQ,TIERS,ORDER,DELIV,PRESETS,
-          REGIONAL_SUPPORT_DEFAULT,REGIONAL_SUPPORT_RANGE,TRAVEL_DEFAULTS,travelCost,
-          compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
+    REGIONAL_SUPPORT_DEFAULT,REGIONAL_SUPPORT_RANGE,TRAVEL_DEFAULTS,travelCost,
+    compute,computeTier,kfmt,money,rng,lineChart,animate,initModals};
 })();

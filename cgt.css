@@ -15,7 +15,7 @@ body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif;color:var(--navy2);
 .navbar.is-cgt .brand-txt{color:#fff;font-weight:700;}
 
 /* headings */
-.eyebrow{font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--blue);font-weight:700;}
+.eyrow,.eyebrow{font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--blue);font-weight:700;}
 .page-title{font-weight:800;letter-spacing:-.5px;color:var(--navy2);}
 .muted{color:var(--mute);}
 
@@ -24,6 +24,17 @@ body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif;color:var(--navy2);
   background:#E4ECF5;color:var(--blue);font-size:11px;font-weight:800;border:none;cursor:pointer;margin-left:6px;vertical-align:middle;line-height:1;}
 .info-btn:hover{background:var(--blue);color:#fff;}
 .label-row{display:flex;align-items:center;}
+
+/* UI Polish enhancements */
+.box {
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 12px rgba(22, 48, 77, 0.03);
+  border-radius: 12px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.box:hover {
+  box-shadow: 0 6px 18px rgba(22, 48, 77, 0.05);
+}
 
 /* package cards */
 .pkg{cursor:pointer;border:2px solid transparent;transition:.18s;height:100%;position:relative;}
@@ -45,9 +56,46 @@ body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif;color:var(--navy2);
 .kpi .kv{font-size:1.55rem;font-weight:800;letter-spacing:-.5px;margin-top:.3rem;color:var(--navy2);}
 .kpi .kr{font-size:.72rem;color:var(--mute);margin-top:.25rem;}
 
-/* receive list */
-.recv .ri{display:flex;align-items:flex-start;gap:10px;font-size:.86rem;margin-bottom:.55rem;color:var(--navy2);}
-.recv .ck{width:19px;height:19px;border-radius:6px;background:#E4F0E9;color:var(--green);flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
+/* receive list (Deliverables grid layout) */
+.recv {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px 20px;
+}
+.recv .ri{display:flex;align-items:flex-start;gap:10px;font-size:.84rem;color:var(--navy2);line-height:1.4;}
+.recv .ck{width:18px;height:18px;border-radius:5px;background:#E4F0E9;color:var(--green);flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;margin-top:1px;}
+
+/* Cost breakdown dashboard items */
+.bd-card {
+  padding: 1.25rem;
+  border-radius: 8px;
+}
+.bd-card.bd-setup {
+  border-left: 4px solid var(--blue);
+  background-color: #F8FAFC;
+}
+.bd-card.bd-recur {
+  border-left: 4px solid var(--teal);
+  background-color: #F6FAF9;
+}
+.breakdown-row {
+  margin-bottom: 1.25rem;
+}
+.breakdown-row:last-child {
+  margin-bottom: 0;
+}
+.mini-track {
+  height: 5px;
+  background: #EDF2F8;
+  border-radius: 3px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.mini-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
 
 /* journey */
 .jstep{display:flex;gap:13px;position:relative;padding-bottom:15px;}
